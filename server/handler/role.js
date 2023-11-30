@@ -1,50 +1,34 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { conn } = require('../server');
-const cors = require('cors'); 
+const { sql } = require('../connect'); // Import your connection file
 
-const PORT = 8080;
-const app = express();
+const getAllRoles = async (req, res) => {
+  try {
+    const pool = await sql.conn;
+    const result = await pool.request().query('SELECT * FROM Role');
+    res.json(result.recordset);
+  } catch (error) {
+    console.error('Error fetching all roles:', error);
+    res.status(500).json({ error: 'Failed to fetch roles' });
+  }
+};
 
-app.use(bodyParser.json());
-app.use(cors());
+const getRoleById = async (req, res) => {
+  try {
+    const pool = await sql.conn;
+    const { id } = req.params;
+    const result = await pool
+      .request()
+      .input('id', sql.sql.Int, id)
+      .query('SELECT * FROM Role WHERE RoleID = @id');
 
-//get all student
-app.get('/api/role', async function (req, res) {
-    try {
-        const pool = await conn;
-        const result = await pool.request().query('SELECT * FROM Role');
-        res.json(result.recordset);
-        console.log(result.recordset);
-    } catch (error) {
-        console.error('Error fetching all roles:', error);
-        res.status(500).json({ error: 'Failed to fetch students' });
+    if (result.recordset.length === 0) {
+      res.status(404).json({ error: 'Role not found' });
+    } else {
+      res.json(result.recordset[0]);
     }
-});
+  } catch (error) {
+    console.error('Error fetching role by ID:', error);
+    res.status(500).json({ error: 'Failed to fetch role' });
+  }
+};
 
-//get base on id
-app.get('/api/role/:id', async function (req, res) {
-    try {
-        const pool = await conn;
-        const { id } = req.params; // The parameter is named id, not UserID
-        const result = await pool
-            .request()
-            .input('id', id) // Use the id variable here
-            .query('SELECT * FROM Role WHERE RoleID = @id'); // Modify the query to reference the [User] table
-
-        if (result.recordset.length === 0) {
-            res.status(404).json({ error: 'User not found' });
-        } else {
-            res.json(result.recordset[0]);
-            console.log('Fetched completely.');
-        }
-    } catch (error) {
-        console.error('Error fetching user by ID:', error);
-        res.status(500).json({ error: 'Failed to fetch Role' });
-    }
-});
-
-
-app.listen(PORT, function () {
-    console.log(`Server is running at client site: http://localhost:${PORT}`);
-});
+module.exports = { getAllRoles, getRoleById };

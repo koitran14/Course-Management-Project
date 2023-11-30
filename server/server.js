@@ -1,21 +1,24 @@
-const mysql = require('mssql/msnodesqlv8');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const { getAllRoles, getRoleById } = require('./handler/role'); // Import your handlers
+const { getAllUsers, getUserByID, createUser, updateUser } = require('./handler/user');
 
-var config = {
-    server: "LAPTOP-J8Q1OE31\\SQLEXPRESS", //update me
-    database: "CourseDB",
-    options: {
-        synchronize: true,
-        trustServerCertificate: true,
-        trustedConnection: true,
-    },
-    driver: "msnodesqlv8"
-}
+const app = express();
+const PORT = 8080;
 
-const myconn = new mysql.ConnectionPool(config).connect().then(pool => {
-    return pool;
-})
+app.use(bodyParser.json());
+app.use(cors());
 
-module.exports = {
-    conn: myconn,
-    sql: mysql
-}
+// Routes
+app.get('/api/role', getAllRoles);
+app.get('/api/role/:id', getRoleById);
+
+app.get('/api/user', getAllUsers);
+app.get('/api/user/:id', getUserByID);
+app.post('/api/user', createUser);
+app.put('/api/user', updateUser);
+
+app.listen(PORT, () => {
+  console.log(`Server is running at client site: http://localhost:${PORT}`);
+});
