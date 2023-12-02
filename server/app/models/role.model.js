@@ -1,105 +1,79 @@
 const { conn, sql } = require('../../connect');
 
-module.exports = class User {
-    async getAll() {
-        try {
-            const pool = await conn;
-            const sqlString = "SELECT * FROM User";
-            const data = await pool.request().query(sqlString);
-            
-            if (data.recordset.length > 0) {
-                console.log('Get all users completely.');
-                data.recordset;
+module.exports = class Role {
+    async getAll(result) {
+        var pool = await conn;
+        var sqlString = 'Select * from Role';
+        return await pool.request()
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset);
             } else {
-                console.log('Empty User table');
-                null;
+                result (true, null);
             }
-        } catch (error) {
-            console.error('Error fetching all users:', error);
-            res.status(500).json({ error: 'Failed to fetch all users' });
-        }
+        })
     }
 
-    async getByID(id) {
-        try {
-            const pool = await conn;
-            var sqlString = 'SELECT * FROM [User] WHERE UserID = @id'
-            const result = await pool.request()
-                .input('id', id) // Use the id variable here
-                .query(sqlString); // Modify the query to reference the [User] table
-    
-            if (result.recordset.length === 0) {
-                res.status(404).json({ error: 'User not found' });
+    async getByID(id, result) {
+        var pool = await conn;
+        var sqlString = "Select * from Role Where RoleID = @varID";
+        return await pool.request()
+        .input('varID', sql.NVarChar(25), id)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset[0]);
             } else {
-                console.log('Fetched completely.');
-                res.json(result.recordset[0]);
+                result (true, null);
             }
-        } catch (error) {
-            console.error('Error fetching user by ID:', error);
-            res.status(500).json({ error: 'Failed to fetch user by ID' });
-        }
+        })
     }
 
-    async create(newData) {
-        try {
+    async create(newData, result) {
             var pool = await conn;
-            var sqlString = "INSERT INTO [User](UserID, UserFirstName, UserLastName, UserEmail, UserDOB, LoginID, RoleID) VALUES(@UserID, @UserFirstName, @UserLastName, @UserEmail, @UserDOB, @LoginID, @RoleID)"
+            var sqlString = "INSERT INTO Role (RoleID, RoleName, RoleDescription) VALUES(@RoleID, @RoleName, @RoleDescription)"
         
-            const result = await pool.request()
-            .input('UserID', sql.NVarChar(25), newData.UserID)
-            .input('UserFirstName', sql.NVarChar(25), newData.UserFirstName)
-            .input('UserLastName', sql.NVarChar(25), newData.UserLastName)
-            .input('UserEmail', sql.NVarChar(25), newData.UserEmail)
-            .input('UserDOB', sql.Date, newData.UserDOB)
-            .input('LoginID', sql.NVarChar(25), newData.LoginID)
+            return await pool.request()
             .input('RoleID', sql.NVarChar(25), newData.RoleID)
-            .query(sqlString)
-
-            res.status(201).send({ result })
-
-        } catch (error) {
-            console.error('Error fetching user by ID:', error);
-            res.status(500).json({ error: 'Failed to create ID' });
-        }
+            .input('RoleName', sql.NVarChar(25), newData.RoleName)
+            .input('RoleDescription', sql.NVarChar(150), newData.RoleDescription)
+            .query(sqlString, function(err, data) {
+                if (err) {
+                    result(true, null)
+                } else {
+                    result( null, data)
+                }
+            })
     }
 
-    async update(newData) {
-        try {
+    async update(newData, result) {
             var pool = await conn;
-            var sqlString = "UPDATE [User] SET UserFirstName = @UserFirstName, UserLastName = @UserLastName, UserEmail = @UserEmail, UserDOB = @UserDOB) WHERE UserID = @UserID"
+            var sqlString = "UPDATE Role SET RoleName = @RoleName, RoleDescription = @RoleDescription) WHERE RoleID = @RoleID"
             
-            const result = await pool.request()
-            .input('UserFirstName', sql.NVarChar(25), newData.UserFirstName)
-            .input('UserLastName', sql.NVarChar(25), newData.UserLastName)
-            .input('UserEmail', sql.NVarChar(25), newData.UserEmail)
-            .input('UserDOB', sql.Date, newData.UserDOB)
-            .query(sqlString)
-            
-            res.status(201).send({ result })
+            return await pool.request()
+            .input('RoleID', sql.NVarChar(25), newData.RoleID)
+            .input('RoleName', sql.NVarChar(25), newData.RoleName)
+            .input('RoleDescription', sql.NVarChar(150), newData.RoleDescription)
+            .query(sqlString, function(err, data){
+                if (err) {
+                    result(true, null)
+                } else {
+                    result(null, newData)
+                }
+            })
+    }
 
-        } catch (error) {
-            console.error('Error fetching user by ID:', error);
-            res.status(500).json({ error: 'Failed to update ID' });
+    async delete(id, result) {
+            var pool = await conn;
+            var sqlString = "Delete from Role where RoleID = @id";
+            return await pool.request()
+            .input('id', sql.NVarChar(25), id)
+            .query(sqlString, function(err, data){
+                if (err){
+                    result(true, null);
+                } else {
+                    result(null, data);
+                }
+            })
         }
     }
 
-    async delete(id) {
-        try {
-            const pool = await conn;
-            const result = await pool
-                .request()
-                .input('id', sql.VarChar(25), id) // Use the id variable here
-                .query('DELETE FROM [User] WHERE UserID = @id'); // Modify the query to reference the [User] table
-    
-            if (result.recordset.length === 0) {
-                res.status(404).json({ error: 'User not found' });
-            } else {
-                res.json(result.recordset[0]);
-                console.log('Delete completely.');
-            }
-        } catch (error) {
-            console.error('Error deleting user by ID:', error);
-            res.status(500).json({ error: 'Failed to delete user' });
-        }
-    }
-}

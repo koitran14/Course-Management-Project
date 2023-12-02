@@ -15,9 +15,9 @@ VALUES
 --   [User] table
 INSERT INTO [User] (UserID, UserLastName, UserFirstName, UserEmail, UserDOB, LoginID, RoleID)
 VALUES
-    ('U001', 'Admin', 'Alice', 'admin@example.com', '1990-01-01', 'L001', 'R001'),
-    ('U002', 'Tutor', 'Bob', 'tutor@example.com', '1985-05-15', 'L002', 'R002'),
-    ('U003', 'Student', 'Charlie', 'student@example.com', '2000-09-20', 'L003', 'R003');
+    ('U001', 'Adlan', 'Alice', 'admin@example.com', '1990-01-01', 'L001', 'R001'),
+    ('U002', 'Kali', 'Bob', 'tutor@example.com', '1985-05-15', 'L002', 'R002'),
+    ('U003', 'Mosala', 'Charlie', 'student@example.com', '2000-09-20', 'L003', 'R003');
 
 --   Department table
 INSERT INTO Department (DeptID, DeptName)
