@@ -58,7 +58,7 @@ CREATE TABLE Content (
     ConID VARCHAR(25) PRIMARY KEY,
     ConTitle VARCHAR (50),
     ConDesc VARCHAR (150),
-    ConDate VARCHAR (200),
+    ConDate Date,
     CourseID VARCHAR(25),
 )
 
