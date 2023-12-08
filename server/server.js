@@ -10,6 +10,8 @@ app.use(bodyParser.json());
 
 require('./app/routes/role.route')(app);
 require('./app/routes/user.route')(app);
+require('./app/routes/course.route')(app);
+
 
 app.use(cors());
 

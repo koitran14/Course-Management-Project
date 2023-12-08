@@ -52,6 +52,7 @@ CREATE TABLE Course (
     CourseID VARCHAR(25) PRIMARY KEY,
     CourseName VARCHAR(50),
     TutorID VARCHAR(25),
+    DeptID VARCHAR(25),
 )
 
 CREATE TABLE Content (
@@ -110,6 +111,10 @@ ALTER TABLE Tutor
 ADD FOREIGN KEY (UserID) REFERENCES [User](UserID);
 
 ALTER TABLE Tutor
+ADD FOREIGN KEY (DeptID) REFERENCES Department(DeptID);
+
+
+ALTER TABLE Course
 ADD FOREIGN KEY (DeptID) REFERENCES Department(DeptID);
 
 ALTER TABLE Enroll

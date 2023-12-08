@@ -1,5 +1,4 @@
 export interface User {
-    result: any;
     UserID: string,
     UserLastName: string,
     UserFirstName: string,
@@ -12,6 +11,5 @@ export interface User {
 export async function getUser(id: string): Promise<User> {
     const res = await fetch(`${process.env.API_URL}/user/${id}`,{ next: { revalidate: 0 }}); // time to revalidate (refetch new data updated)
     const data = await res.json();
-    return await data.result;
-
+    return data.result;
 }

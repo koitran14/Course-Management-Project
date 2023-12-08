@@ -1,65 +1,83 @@
 --   Role table
 INSERT INTO Role (RoleID, RoleName, RoleDescription)
 VALUES
-    ('R001', 'Admin', 'Administrative Role'),
-    ('R002', 'Tutor', 'Teaching Role'),
-    ('R003', 'Student', 'Learning Role');
+    ('R001', 'Tutor', 'Teaching Role'),
+    ('R002', 'Student', 'Learning Role');
 
 --   Login table
 INSERT INTO Login (LoginID, LoginUserName, LoginPassword)
 VALUES
-    ('L001', 'admin_user', 'admin_pass'),
-    ('L002', 'tutor_user', 'tutor_pass'),
-    ('L003', 'student_user', 'student_pass');
+    ('L001', 'tutor_user', 'tutor_pass'),
+    ('L002', 'tutor2_user', 'tutor2_pass'),
+    ('L003', 'student_user', 'student_pass'),
+    ('L004', 'student2_user', 'student2_pass');
+
 
 --   [User] table
 INSERT INTO [User] (UserID, UserLastName, UserFirstName, UserEmail, UserDOB, LoginID, RoleID)
 VALUES
-    ('U001', 'Adlan', 'Alice', 'admin@example.com', '1990-01-01', 'L001', 'R001'),
-    ('U002', 'Kali', 'Bob', 'tutor@example.com', '1985-05-15', 'L002', 'R002'),
-    ('U003', 'Mosala', 'Charlie', 'student@example.com', '2000-09-20', 'L003', 'R003');
+    ('U001', 'Adlan', 'Alice', 'tutor@example.com', '1990-01-01', 'L001', 'R001'),
+    ('U002', 'Adlan', 'Alice', 'tutor2@example.com', '1990-01-01', 'L002', 'R001'),
+    ('U003', 'Kali', 'Bob', 'student1@example.com', '1985-05-15', 'L003', 'R002'),
+    ('U004', 'Mosala', 'Charlie', 'student2@example.com', '2000-09-20', 'L004', 'R002');
 
 --   Department table
 INSERT INTO Department (DeptID, DeptName)
 VALUES
     ('D001', 'Computer Science'),
-    ('D002', 'Mathematics'),
-    ('D003', 'Physics');
+    ('D002', 'Mathematics');
 
 --   Student table
 INSERT INTO Student (StudentID, UserID, DeptID)
 VALUES
-    ('S001', 'U003', 'D001'),
-    ('S002', 'U003', 'D002'),
-    ('S003', 'U003', 'D003');
+    ('S001', 'U002', 'D001'),
+    ('S002', 'U003', 'D002');
 
 --   Tutor table
 INSERT INTO Tutor (TutorID, UserID, DeptID)
 VALUES
-    ('T001', 'U002', 'D001'),
-    ('T002', 'U002', 'D002'),
-    ('T003', 'U002', 'D003');
+    ('T001', 'U001', 'D001'),
+    ('T002', 'U002', 'D002');
+
 
 --   Course table
-INSERT INTO Course (CourseID, CourseName, TutorID)
+INSERT INTO Course (CourseID, CourseName, TutorID, DeptID)
 VALUES
-    ('C001', 'Introduction to Programming', 'T001'),
-    ('C002', 'Calculus I', 'T002'),
-    ('C003', 'Mechanics', 'T003');
+    ('C001', 'Introduction to Programming', 'T001','D001'),
+    ('C002', 'Calculus I', 'T002', 'D002'),
+    ('C003', 'Mechanics', 'T002', 'D001'),
+    ('C004', 'Data Structures', 'T001', 'D002'),
+    ('C005', 'Linear Algebra', 'T002', 'D002'),
+    ('C006', 'Principle of Database Management', 'T002', 'D001');
 
 --   Enroll table
 INSERT INTO Enroll (EnrollID, EnrollDate, StudentID, CourseID)
 VALUES
     ('E001', '2023-01-01', 'S001', 'C001'),
-    ('E002', '2023-01-01', 'S002', 'C002'),
-    ('E003', '2023-01-01', 'S003', 'C003');
+    ('E002', '2023-01-01', 'S001', 'C002'),
+    ('E003', '2023-01-01', 'S001', 'C003'),
+    ('E004', '2023-01-05', 'S001', 'C002'),
+    ('E005', '2023-02-20', 'S001', 'C004'),
+    ('E006', '2023-01-10', 'S002', 'C003'),
+    ('E007', '2023-02-25', 'S002', 'C005'),
+    ('E008', '2023-03-15', 'S002', 'C001');
 
 --   Content table
+-- Insert 2 content entries for each course
 INSERT INTO Content (ConID, ConTitle, ConDesc, ConDate, CourseID)
 VALUES
     ('CN001', 'Introduction to Variables', 'Basic concepts of variables', '2023-01-05', 'C001'),
-    ('CN002', 'Limits and Derivatives', 'Understanding limits and derivatives', '2023-01-10', 'C002'),
-    ('CN003', 'Newtonian Mechanics', 'Introductory mechanics principles', '2023-01-15', 'C003');
+    ('CN002', 'Limits and Derivatives', 'Understanding limits and derivatives', '2023-01-10', 'C001'),
+    ('CN003', 'Calculus Fundamentals', 'Fundamental concepts of calculus', '2023-01-15', 'C002'),
+    ('CN004', 'Integration Techniques', 'Exploring integration techniques', '2023-01-20', 'C002'),
+    ('CN005', 'Mechanics Basics', 'Basic principles of mechanics', '2023-01-25', 'C003'),
+    ('CN006', 'Mechanics Advanced', 'Advanced concepts in mechanics', '2023-01-30', 'C003'),
+    ('CN007', 'Data Structures Overview', 'Overview of data structures', '2023-02-05', 'C004'),
+    ('CN008', 'Data Structures Implementation', 'Implementation of data structures', '2023-02-10', 'C004'),
+    ('CN009', 'Linear Algebra Basics', 'Basic concepts of linear algebra', '2023-02-15', 'C005'),
+    ('CN010', 'Matrix Operations', 'Operations on matrices', '2023-02-20', 'C005'),
+    ('CN011', 'Database Management Overview', 'Overview of database management', '2023-02-25', 'C006'),
+    ('CN012', 'Database Modeling', 'Concepts of database modeling', '2023-03-01', 'C006');
 
 --   Announcement table
 INSERT INTO Announcement (AnID, AnTitle, AnDesc, AnDate, CourseID)
