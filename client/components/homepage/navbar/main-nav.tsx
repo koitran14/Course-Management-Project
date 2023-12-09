@@ -1,26 +1,31 @@
+"use client"
+
 import Link from "next/link";
 import MobileNavForCourse from "../course/mobile-c-nav-bar";
-
-const Navigator = [
-    {
-        title: "Home",
-        href: '/'
-    },
-    {
-        title: "Announcement",
-        href: '/'
-    },
-    {
-        title: "Content",
-        href: '/'
-    },
-    {
-        title: "Assignment",
-        href: '/'
-    }
-]
+import { useParams } from "next/navigation";
 
 const MainNav = () => {
+    const params = useParams();
+
+    const Navigator = [
+        {
+            title: "Home",
+            href: `/${params.UserID}/${params.CourseID}`
+        },
+        {
+            title: "Announcement",
+            href: `/${params.UserID}/${params.CourseID}/announcements`
+        },
+        {
+            title: "Content",
+            href: `/${params.UserID}/${params.CourseID}/contents`
+        },
+        {
+            title: "Assignment",
+            href: `/${params.UserID}/${params.CourseID}/assignments`
+        }
+    ]
+    
     return (
         <>
             <div className="items-center hidden md:flex md:gap-x-5 md:px-2 px-0">

@@ -13,19 +13,19 @@ const MobileNavForCourse = () => {
     const Navigator = [
         {
             title: "Home",
-            href: `/${params.UserID}`
+            href: `/${params.UserID}/${params.CourseID}`
         },
         {
             title: "Announcement",
-            href: `/${params.UserID}`
+            href: `/${params.UserID}/${params.CourseID}/announcements`
         },
         {
             title: "Content",
-            href: `/${params.UserID}`
+            href: `/${params.UserID}/${params.CourseID}/contents`
         },
         {
             title: "Assignment",
-            href: `/${params.UserID}`
+            href: `/${params.UserID}/${params.CourseID}/assignments`
         }
     ]
 

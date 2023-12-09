@@ -1,5 +1,4 @@
 import NavBar from "@/components/homepage/navbar/nav-bar";
-import Image from "next/image";
 
 const GeneralLayoutForPage = ({
     children

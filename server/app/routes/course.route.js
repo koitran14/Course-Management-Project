@@ -5,7 +5,7 @@ module.exports = function(app){
 
     app.get('/api/course/:id', getCourseById);
 
-    app.get('/api/user/course/:id', getAllCoursesByStudent_UserId);
+    app.get('/api/:id/course/', getAllCoursesByStudent_UserId);
 
     app.post('/api/course', createCourse);
 

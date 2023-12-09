@@ -1,5 +1,4 @@
 import { getCourses } from '@/actions/get-courses';
-import { getUser } from '@/actions/get-user';
 import { NewCards } from '@/components/homepage/news-card';
 
 interface MainPageProps {
@@ -10,16 +9,24 @@ interface MainPageProps {
 
 const MainPage: React.FC<MainPageProps> = async({
   params
-}) => {  
-  const user = await getUser(params.UserID);
+}) => { 
   const courses = await getCourses(params.UserID);
   
-  const tables = [
+  const col1 = [
     {
       title: 'My Announcements',
       href: `${params.UserID}/announcements`,
+      data: undefined
     }, 
     {
+      title: 'My Alerts ',
+      href: `${params.UserID}/alerts`,
+      data: undefined
+    }
+]
+
+const col2 = [
+{
       title: 'My courses',
       href: `${params.UserID}/courses`,
       data: courses
@@ -27,21 +34,26 @@ const MainPage: React.FC<MainPageProps> = async({
     {
       title: 'My Tasks ',
       href: `${params.UserID}/tasks`,
-    },
-    {
-      title: 'My Alerts ',
-      href: `${params.UserID}/alerts`,
+      data: undefined
     }
-  ]
-  const mainContent = user ? `Welcome ${user.UserFirstName} ${user.UserLastName} to our BlackBoard`: 'No profile data';
+]
 
   return (
-    <div className='w-full grid md:grid-cols-2 grid-cols-1 py-20 gap-[100px]'>
-      {tables.map((table) => (
-        <div key={table.title}>
-          <NewCards title={table.title} data={table.data}/>  
-        </div>
-      ))}
+    <div className='w-full grid md:grid-cols-2 grid-cols-1 auto-cols-fr pt-14 h-full gap-x-8'>
+      <div className='flex flex-col gap-y-0'>
+        {col1.map(table => (
+          <div key={table.title}>
+            <NewCards title = {table.title} data={table.data} href={table.href}/>
+          </div>
+        ))}
+      </div>
+      <div className='flex flex-col gap-y-0'>
+        {col2.map(table => (
+          <div key={table.title}>
+            <NewCards title = {table.title} data={table.data} href={table.href}/>
+          </div>
+        ))}
+      </div>
     </div> 
   );
   
