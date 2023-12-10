@@ -1,7 +1,7 @@
 const mysql = require('mssql/msnodesqlv8');
 
 var config = {
-    server: "LAPTOP-J8Q1OE31\\SQLEXPRESS", //update me
+    server: "DESKTOP-10GO17E\\SQLEXPRESS", //update me
     database: "CourseDB",
     options: {
         synchronize: true,
