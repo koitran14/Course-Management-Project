@@ -5,6 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { User } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import  useAuth  from '@/hooks/useAuth'
 
 const NavigatorForMain = [
     {
@@ -14,17 +15,17 @@ const NavigatorForMain = [
     {
         title: 'Edit',
         path: 'edit'
-    },
-    {
-        title: 'Sign-out',
-        path: 'sign-out'
-    },
+    }
 ]
 
 const UserDropDown = () => {
-
+    const { setAuth } = useAuth();
     const params = useParams();
-
+    
+    const signOut = () => {
+        setAuth({});
+    }
+    
     return (
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -43,6 +44,13 @@ const UserDropDown = () => {
                             <DropdownMenuSeparator className="border-b-2"/>
                         </div>
                     ))}
+
+                    <DropdownMenuItem className=" outline-none">
+                        <button className="w-full h-fit p-0 bg-transparent flex text-black" onClick={signOut}>
+                            Log out
+                        </button>
+                     </DropdownMenuItem>
+                     <DropdownMenuSeparator className="border-b-2"/>
                 </DropdownMenuContent>
             </DropdownMenu>
     );
