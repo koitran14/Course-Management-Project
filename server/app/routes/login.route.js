@@ -1,9 +1,11 @@
-const { getAllLogin,getLoginByUserName, createLogin, updateLogin, deleteLoginByID } = require("../controllers/login");
+const { getAllLogin, getLoginByID, getLoginByUserName, createLogin, updateLogin, deleteLoginByID } = require("../controllers/login");
 
 module.exports = function(app){
     app.get('/api/login', getAllLogin);
 
-    app.get('/api/login/:username', getLoginByUserName);
+    app.get('/api/login/:id', getLoginByID);
+
+    app.get('/api/login/name/:username', getLoginByUserName);
 
     app.post('/api/login', createLogin);
 

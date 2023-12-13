@@ -13,3 +13,9 @@ export async function getUser(id: string): Promise<User> {
     const data = await res.json();
     return data.result;
 }
+
+export async function getUserByLoginId(id: string): Promise<User> {
+    const res = await fetch(`http://localhost:8080/api/user/login/${id}`, {next: { revalidate: 0 }});
+    const data = await res.json();
+    return data.result;
+}

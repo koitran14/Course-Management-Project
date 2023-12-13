@@ -1,4 +1,4 @@
-import { getCourse } from "@/actions/get-course";
+import { getCourse } from "@/actions/course-actions";
 import CourseNav from "@/components/homepage/course/c-nav-bar";
 import { useParams } from "next/navigation";
 

@@ -1,4 +1,4 @@
-import { getCourses } from '@/actions/get-courses';
+import { getCourses } from '@/actions/course-actions';
 import { NewCards } from '@/components/homepage/news-card';
 
 interface MainPageProps {
@@ -10,6 +10,7 @@ interface MainPageProps {
 const MainPage: React.FC<MainPageProps> = async({
   params
 }) => { 
+
   const courses = await getCourses(params.UserID);
   
   const col1 = [

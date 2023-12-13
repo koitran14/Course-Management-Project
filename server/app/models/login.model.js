@@ -16,10 +16,25 @@ module.exports = class Login {
 
     async getByUserName(username, result) {
         var pool = await conn;
-        var sqlString = "Select * from Login Where LoginUserName = @varUserName";
+        var sqlString = "Select * from Login Where LoginUserName = @UserName";
         
         return await pool.request()
-        .input('varUserName', sql.NVarChar(25), username)
+        .input('UserName', sql.NVarChar(25), username)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset[0]);
+            } else {
+                result (true, null);
+            }
+        })
+    }
+
+    async getByID(id, result) {
+        var pool = await conn;
+        var sqlString = "Select * from Login Where LoginID = @LoginID";
+        
+        return await pool.request()
+        .input('LoginID', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){
             if (data.recordset.length > 0){
                 result(null, data.recordset[0]);
@@ -36,8 +51,8 @@ module.exports = class Login {
     
         return await pool.request()
             .input('LoginID', sql.NVarChar(25), newData.LoginID)
-            .input('LoginUserName', sql.NVarChar(50), newData.LoginUserName)
-            .input('LoginPassword', sql.NVarChar(150), newData.LoginPassword)
+            .input('LoginUserName', sql.NVarChar(25), newData.LoginUserName)
+            .input('LoginPassword', sql.NVarChar(25), newData.LoginPassword)
         .query(sqlString, function(err, data) {
             if (err) {
                 result(true, null)

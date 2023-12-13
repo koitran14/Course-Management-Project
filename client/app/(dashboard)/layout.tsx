@@ -1,10 +1,20 @@
+"use client"
+
 import NavBar from "@/components/homepage/navbar/nav-bar";
+import { redirect } from 'next/navigation';
+import useAuth from '@/hooks/useAuth'
 
 const GeneralLayoutForPage = ({
     children
 }:{
     children: React.ReactNode
 }) => {
+    const { auth } = useAuth();
+
+    if (auth.user === undefined){
+        redirect('/login');
+    }
+
     return (
         <div className="h-full w-full relative bg-center bg-cover"
             style={{

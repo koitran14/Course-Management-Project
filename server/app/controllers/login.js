@@ -13,6 +13,12 @@ exports.getLoginByUserName = async (req, res) => {
     })
 };
 
+exports.getLoginByID = async (req, res) => {
+    model.getByID(req.params.id, (err, data)=> {
+        res.send({result: data, error: err})
+    })
+};
+
 exports.createLogin = async (req, res) => {
     model.create(req.body, function(err, data){
         res.send({result: data, error: err});

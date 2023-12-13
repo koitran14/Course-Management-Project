@@ -14,6 +14,12 @@ exports.getUserByID = async (req, res) => {
     })
 };
 
+exports.getUserByLoginID = async (req, res) => {
+    model.getByLoginID(req.params.id, (err, data)=> {
+        res.send({result: data, error: err})
+    })
+};
+
 exports.createUser = async (req, res) => {
     model.create(req.body, function(err, data){
         res.send({result: data, error: err});

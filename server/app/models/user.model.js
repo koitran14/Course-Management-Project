@@ -29,6 +29,21 @@ module.exports = class User {
         })
     }
 
+    async getByLoginID(id, result) {
+        var pool = await conn;
+        var sqlString = "Select * from [User] Where LoginID = @varID";
+        
+        return await pool.request()
+        .input('varID', sql.NVarChar(25), id)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset[0]);
+            } else {
+                result (true, null);
+            }
+        })
+    }
+
     async create(newData, result) {
         var pool = await conn;
         var sqlString = "INSERT INTO [User](UserID, UserFirstName, UserLastName, UserEmail, UserDOB, LoginID, RoleID) VALUES(@UserID, @UserFirstName, @UserLastName, @UserEmail, @UserDOB, @LoginID, @RoleID)"

@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import navlogo from "@/public/nav-logo.svg"
 import Link from "next/link";

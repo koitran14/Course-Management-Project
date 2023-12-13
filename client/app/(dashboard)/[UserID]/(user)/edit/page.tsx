@@ -1,4 +1,4 @@
-import { getUser } from "@/actions/get-user";
+import { getUser } from "@/actions/user-actions";
 import { DatePicker } from "@/components/homepage/profile-update/date-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

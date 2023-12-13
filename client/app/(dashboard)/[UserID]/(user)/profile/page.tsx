@@ -1,4 +1,4 @@
-import { getUser } from "@/actions/get-user";
+import { getUser } from "@/actions/user-actions";
 import logoIU from "@/public/logo-iu.svg"
 import Image from "next/image";
 

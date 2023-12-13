@@ -1,9 +1,9 @@
-const AlertsPage = () => {
+const TasksPage = () => {
     return (
         <div>
-            this is alerts page of the course
+            this is tasks page of the course
         </div>
     );
 }
  
-export default AlertsPage;
+export default TasksPage;
