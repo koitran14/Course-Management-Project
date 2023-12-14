@@ -28,11 +28,25 @@ module.exports = class Course {
         })
     }
 
-    async getAllByStudentUserID(id, result) {
+    async getAllByTeacherID(id, result) {
         var pool = await conn;
-        var sqlString = "SELECT Course.* FROM Course JOIN Enroll ON Course.CourseID = Enroll.CourseID JOIN Student ON Enroll.StudentID = Student.StudentID JOIN [User] ON Student.UserID = [User].UserID WHERE [User].UserID = @varID;"
+        var sqlString = "SELECT Course.* FROM Course WHERE Course.UserID = @UserID;"
         return await pool.request()
-        .input('varID', sql.NVarChar(25), id)
+        .input('UserID', sql.NVarChar(25), id)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset);
+            } else {
+                result (true, null);
+            }
+        })
+    }
+
+    async getAllByStudentID(id, result) {
+        var pool = await conn;
+        var sqlString = "SELECT Course.* FROM Course INNER JOIN Enroll ON Course.CourseID = Enroll.CourseID WHERE Enroll.UserID = @UserID;"
+        return await pool.request()
+        .input('UserID', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){
             if (data.recordset.length > 0){
                 result(null, data.recordset);

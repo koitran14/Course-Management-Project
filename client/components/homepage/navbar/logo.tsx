@@ -13,7 +13,7 @@ const Logo = () => {
                 priority
                 src= {navlogo}
                 alt="Blackboard for IU"
-                className="w-[280px]"
+                className="w-[300px]"
             />
         </Link>
     );

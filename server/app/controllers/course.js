@@ -13,8 +13,14 @@ exports.getCourseById = async (req, res) => {
   })
 }
 
-exports.getAllCoursesByStudent_UserId = async (req, res) => {
-  model.getAllByStudentUserID( req.params.id, (err, data) => {
+exports.getAllCoursesByStudentId = async (req, res) => {
+  model.getAllByStudentID( req.params.id, (err, data) => {
+    res.send({ result: data, error: err})
+  })
+}
+
+exports.getAllCoursesByTeacherId = async (req, res) => {
+  model.getAllByTeacherID( req.params.id, (err, data) => {
     res.send({ result: data, error: err})
   })
 }

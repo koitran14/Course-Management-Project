@@ -17,10 +17,10 @@ const LayoutForCousePage = async({
     return (
         <div className="w-full flex justify-center h-full">
             <div className="h-full w-full bg-white/90 relative">
-                <div className="w-full absolute top-0 left-0 sm:h-20 h-16 z-50">
+                <div className="w-full absolute top-0 left-0 h-[70px] z-50">
                     <CourseNav currentCourse={course.CourseName} />
                 </div>
-                <div className="pt-20 h-full w-full absolute top-0 left-0 z-10 overflow-y-auto">
+                <div className="pt-[70px] h-full w-full absolute top-0 left-0 z-10 overflow-y-auto">
                     {children}
                 </div>
             </div>

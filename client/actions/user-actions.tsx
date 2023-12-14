@@ -1,11 +1,14 @@
 export interface User {
     UserID: string,
+    UserName: string,
+    UserPass: string,
     UserLastName: string,
     UserFirstName: string,
     UserEmail: string,
     UserDOB: Date,
-    LoginID: string,
-    RoleID: string
+    UserUniID: string,
+    RoleID: string,
+    DeptID: string
 }
 
 export async function getUser(id: string): Promise<User> {
@@ -14,8 +17,21 @@ export async function getUser(id: string): Promise<User> {
     return data.result;
 }
 
-export async function getUserByLoginId(id: string): Promise<User> {
-    const res = await fetch(`http://localhost:8080/api/user/login/${id}`, {next: { revalidate: 0 }});
+export async function getUserByUserName(username: string): Promise<User> {
+    const res = await fetch(`http://localhost:8080/api/user/username/${username}`, {next: { revalidate: 0 }});
     const data = await res.json();
     return data.result;
+}
+
+export async function createUser(newData: User): Promise<User> {
+    const res = await fetch(`http://localhost:8080/api/user`,
+    { 
+        next: { revalidate: 0 },
+        method: "POST",  
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newData),
+    }).then((data) => data.json()); 
+    return res.result;
 }

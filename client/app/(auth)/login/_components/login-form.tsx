@@ -3,7 +3,6 @@
 import { useRef, useState, useEffect, FormEvent } from 'react';
 import { toast } from "react-hot-toast"
 import { useRouter } from 'next/navigation';
-import { getUserByLoginId } from '@/actions/user-actions';
 import { getRole } from '@/actions/role-actions';
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -57,14 +56,11 @@ const Login = () => {
                 throw new Error('Network response was not ok');            
             }
 
-            const data = await response.json();
-            console.log('Response:', data);
-            console.log(data.LoginID)
-            const userInfo = await getUserByLoginId(data.LoginID as string);
-            console.log(userInfo);
-            const userID = userInfo.UserID;
-            const role = await getRole(userInfo.LoginID);
-            setAuth({ userID, user, pwd, role })
+            const userAuth = await response.json();
+            const userID = userAuth.UserID;
+            const role = await getRole(userAuth.RoleID as string);
+            const roleName = role.RoleName;
+            setAuth({ userID, user, pwd, roleName })
             // Further actions with the data received
         } catch (error) {
             console.log('There was a problem with the fetch operation:', error);
@@ -73,9 +69,9 @@ const Login = () => {
     
 
     return (
-        <section className='w-[300px] h-fit'>
-            <div className='h-fit w-full px-3 flex flex-col gap-y-3'>
-                <h1 className='text-3xl font-semibold'>Sign In</h1>
+        <section className='w-[400px] bg-white h-fit border-4 border-indigo-800 p-8 rounded-3xl'>
+            <div className='h-fit w-full px-3 flex flex-col gap-y-2'>
+                <h1 className='text-3xl font-semibold md:hidden block text-indigo-800'>Sign In</h1>
                 <form className='flex flex-col gap-y-4' onSubmit={handleSubmit}>
                     <label htmlFor="username">Username:</label>
                     <Input 

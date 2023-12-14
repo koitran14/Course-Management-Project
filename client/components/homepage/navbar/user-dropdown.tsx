@@ -25,7 +25,7 @@ const UserDropDown = () => {
     const signOut = () => {
         setAuth({});
     }
-    
+
     return (
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -45,10 +45,8 @@ const UserDropDown = () => {
                         </div>
                     ))}
 
-                    <DropdownMenuItem className=" outline-none">
-                        <button className="w-full h-fit p-0 bg-transparent flex text-black" onClick={signOut}>
+                    <DropdownMenuItem className=" outline-none pt-2 cursor-pointer" onClick={signOut}>
                             Log out
-                        </button>
                      </DropdownMenuItem>
                      <DropdownMenuSeparator className="border-b-2"/>
                 </DropdownMenuContent>

@@ -14,8 +14,8 @@ exports.getUserByID = async (req, res) => {
     })
 };
 
-exports.getUserByLoginID = async (req, res) => {
-    model.getByLoginID(req.params.id, (err, data)=> {
+exports.getUserByUserName = async (req, res) => {
+    model.getByUserName(req.params.name, (err, data)=> {
         res.send({result: data, error: err})
     })
 };

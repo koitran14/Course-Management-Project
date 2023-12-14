@@ -1,11 +1,11 @@
-const { getAllUsers, getUserByID, getUserByLoginID, createUser, updateUser, deleteUserByID } = require("../controllers/user");
+const { getAllUsers, getUserByID, createUser, updateUser, deleteUserByID, getUserByUserName } = require("../controllers/user");
 
 module.exports = function(app){
     app.get('/api/user', getAllUsers);
 
     app.get('/api/user/:id', getUserByID);
 
-    app.get('/api/user/login/:id', getUserByLoginID);
+    app.get('/api/user/username/:name', getUserByUserName);
 
     app.post('/api/user', createUser);
 

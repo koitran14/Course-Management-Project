@@ -34,7 +34,7 @@ const col2 = [
     }
 ]
   return (
-    <div className='w-full grid md:grid-cols-2 grid-cols-1 auto-cols-fr pt-14 h-full gap-x-8 px-12'>
+    <div className='w-full grid md:grid-cols-2 grid-cols-1 auto-cols-fr pt-14 h-full gap-x-8 md:px-12 px-5'>
       <div className='flex flex-col gap-y-0'>
         {col1.map(table => (
           <div key={table.title}>

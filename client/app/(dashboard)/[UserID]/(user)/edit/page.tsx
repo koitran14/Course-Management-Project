@@ -2,6 +2,7 @@ import { getUser } from "@/actions/user-actions";
 import { DatePicker } from "@/components/homepage/profile-update/date-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 const SettingPage = async ({
     params
@@ -12,6 +13,8 @@ const SettingPage = async ({
 }) => {
     const user = await getUser(params.UserID);
     const userDOB = new Date(user.UserDOB);
+
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>();
 
     return (
         <div className="w-full h-full flex justify-center ">
@@ -39,7 +42,7 @@ const SettingPage = async ({
                     <div className="flex flex-col gap-y-3 md:pt-4 pt-1">
                         <h1 className="text-lg pl-2 font-semibold text-slate-600">Date of birth:</h1>
                         <div className="w-full md:w-[400px]">
-                            <DatePicker selectedDate={userDOB.toLocaleDateString()}/>    
+                            <DatePicker selectedDate={userDOB} onChange={setSelectedDate}/>    
                         </div>
                     </div>
 

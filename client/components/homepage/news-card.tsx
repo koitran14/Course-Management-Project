@@ -20,7 +20,7 @@ export function NewCards ({
     const pathname = usePathname();
 
     const toggleExpansion = () => {
-        {(data !== undefined && data?.length !== 0)  && (
+        {(data !== undefined && data !== null)  && (
             setIsExpanded(!isExpanded)
         )}
     }
@@ -41,7 +41,7 @@ export function NewCards ({
                 
                 <div className="h-fit w-full bg-white rounded-xl border-2 border-blue-950 shadow-md shadow-zinc-400">
                     <div className="h-full w-full py-6 px-3 flex items-center justify-center transition-all ease-in-out duration-300">
-                        { !isExpanded && (data?.length !==0 && data!== undefined) ? (
+                        { !isExpanded && (data !== null && data!== undefined) ? (
                             <div className="w-full h-full flex items-center">
                                 <div className="flex flex-col gap-y-3 w-full px-5">
                                     {data?.slice(0, 2).map((course) => (
@@ -55,7 +55,7 @@ export function NewCards ({
                             </div>
                         ) : (
                                 <div className="w-full h-full flex items-center">
-                                    {data === undefined || data.length === 0 ? (
+                                    {data === null || data === undefined ? (
                                     <p className="italic text-zinc-500 justify-center flex w-full">No data.</p>
                                 ) : (
                                     <div className="flex flex-col gap-y-3 w-full px-5">

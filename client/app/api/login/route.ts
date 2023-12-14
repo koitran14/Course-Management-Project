@@ -1,17 +1,12 @@
-import { getLoginByID, getLoginByUserName } from "@/actions/login-actions";
+import { getUserByUserName } from "@/actions/user-actions";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
     try {
         const { username, password } = await request.json();
+        const exist = await getUserByUserName(username);
 
-        const newData = {
-            LoginUserName: username,
-            LoginPassword: password
-        };
-        
-        const exist = await getLoginByUserName(newData.LoginUserName);
-        if (exist && newData.LoginPassword === exist.LoginPassword) {
+        if (exist && password === exist.UserPass) {
             console.log('Login successfully:', exist);
             return NextResponse.json(exist);
         } else {

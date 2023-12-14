@@ -14,12 +14,25 @@ import {
 } from "@/components/ui/popover"
 
 export function DatePicker ({
-  selectedDate
+  selectedDate,
+  onChange
 }:{
-  selectedDate?: string | null
+  selectedDate?: Date 
+  onChange: React.Dispatch<React.SetStateAction<Date | undefined>>
 }) {
   const [date, setDate] = React.useState<Date>()
-  const placeholder = selectedDate ? selectedDate : "Pick a date";
+  const placeholder = selectedDate ? format(selectedDate, "PPP") : "Pick a date";
+
+  React.useEffect(() => {
+    if (selectedDate) {
+      setDate(new Date(selectedDate))
+    }
+  }, [selectedDate])
+  
+  const handleDateSelect = (selectedDate: Date | undefined) => {
+    setDate(selectedDate)
+    onChange(selectedDate) // Update the date in the parent component
+  }
 
   return (
     <Popover>
@@ -39,7 +52,7 @@ export function DatePicker ({
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={handleDateSelect}
           initialFocus
         />
       </PopoverContent>
