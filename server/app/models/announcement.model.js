@@ -1,6 +1,6 @@
 const { conn, sql } = require('../../connect');
 
-module.exports = class Annoucement {
+module.exports = class Announcement {
     async getAll(result) {
         var pool = await conn;
         var sqlString = 'Select * from Announcement';
@@ -29,7 +29,27 @@ module.exports = class Annoucement {
         })
     }
 
-    async getAllByCourseID(id, result) {
+    async getAllByUserID(id, result) {
+        var pool = await conn;
+        var sqlString = `
+        SELECT A.*
+        FROM Announcement A
+        JOIN Enroll E ON A.CourseID = E.CourseID
+        WHERE E.UserID = @varID;  
+    `;
+
+        return await pool.request()
+        .input('varID', sql.NVarChar(25), id)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset);
+            } else {
+                result (true, null);
+            }
+        })
+    }
+
+   async getAllByCourseID(id, result) {
         var pool = await conn;
         var sqlString = "Select * from Announcement Where CourseID = @varID;"
         return await pool.request()
@@ -67,9 +87,9 @@ module.exports = class Annoucement {
         var sqlString = "UPDATE Announcement SET AnTitle = @AnTitle, AnDesc = @AnDesc, AnDate = @AnDate WHERE AnID = @AnID"
         
         return await pool.request()
-        .input('AnTitle', sql.NVarChar(25), newData.Contitle)
-        .input('AnDesc', sql.NVarChar(25), newData.ConDesc)
-        .input('AnDate', sql.Date, newData.ConDate)
+        .input('AnTitle', sql.NVarChar(25), newData.AnTitle)
+        .input('AnDesc', sql.NVarChar(25), newData.AnDesc)
+        .input('AnDate', sql.Date, newData.AnDate)
         .query(sqlString, function(err, data){
             if (err) {
                 result(true, null)

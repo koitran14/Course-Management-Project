@@ -13,6 +13,12 @@ exports.getAnnouncementByID = async (req, res) => {
     })
 };
 
+exports.getAnnouncementByUserID = async (req, res) => {
+    model.getAllByUserID(req.params.id, (err, data)=> {
+        res.send({result: data, error: err})
+    })
+};
+
 exports.getAllAnnouncementsByCourseID = async (req, res) => {
     model.getAllByCourseID( req.params.id, (err, data) => {
       res.send({ result: data, error: err})
