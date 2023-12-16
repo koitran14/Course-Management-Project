@@ -18,6 +18,7 @@ require('./app/routes/role.route')(app);
 require('./app/routes/user.route')(app);
 require('./app/routes/course.route')(app);
 require('./app/routes/announcement.route')(app);
+require('./app/routes/assignment.route')(app);
 require('./app/routes/content.route')(app);
 require('./app/routes/department.route')(app);
 require('./app/routes/assignment.route')(app);

@@ -14,9 +14,11 @@ module.exports = class Assignment {
         })
     }
 
+
     async getByID(id, result) {
         var pool = await conn;
-        var sqlString = "Select * from Assignment Where A_ID = @varID";
+        var sqlString = "SELECT * from Assignment Where A_ID = @varID";
+        
         return await pool.request()
         .input('varID', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){
@@ -28,14 +30,103 @@ module.exports = class Assignment {
         })
     }
 
-    async getByCourseID(id, result) {
+    async getNearByUserID(id, result) {
         var pool = await conn;
-        var sqlString = "Select * from Assignment Where CourseID = @varID";
+        var sqlString = `
+        SELECT TOP 2
+        Assignment.*,
+        CONVERT(VARCHAR, A_DueDate, 103) AS FormattedDueDate,
+        DATEDIFF(DAY, GETDATE(), A_DueDate) AS DaysLeft
+    FROM 
+        Assignment
+    JOIN 
+        Course ON Assignment.CourseID = Course.CourseID
+    JOIN 
+        Enroll ON Course.CourseID = Enroll.CourseID
+    JOIN 
+        [User] ON Enroll.UserID = [User].UserID
+    WHERE 
+        [User].UserID = @varID
+    ORDER BY 
+        A_DueDate ASC;
+    
+    `;
         return await pool.request()
         .input('varID', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){
             if (data.recordset.length > 0){
-                result(null, data.recordset[0]);
+                result(null, data.recordset);
+            } else {
+                result (true, null);
+            }
+        })
+    }
+
+    async getNearByCourseID(id, result) {
+        var pool = await conn;
+        var sqlString = `
+        SELECT TOP 2
+        Assignment.*,
+        CONVERT(VARCHAR, A_DueDate, 103) AS FormattedDueDate,
+        DATEDIFF(DAY, GETDATE(), A_DueDate) AS DaysLeft
+    FROM 
+        Assignment
+    WHERE 
+        Assignment.CourseID = @varID
+    ORDER BY 
+        A_DueDate ASC;
+    
+    `;
+        return await pool.request()
+        .input('varID', sql.NVarChar(25), id)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset);
+            } else {
+                result (true, null);
+            }
+        })
+    }
+
+    
+
+
+    async getAllByUserID(id, result) {
+        var pool = await conn;
+        var sqlString = `
+        SELECT DISTINCT Assign.*
+        FROM 
+            Assignment Assign
+        JOIN 
+            Course ON Assign.CourseID = Course.CourseID
+        JOIN 
+            Enroll ON Course.CourseID = Enroll.CourseID
+        JOIN 
+            [User] ON Enroll.UserID = [User].UserID
+        WHERE 
+            [User].UserID = @varID;
+        
+    `;
+        return await pool.request()
+        .input('varID', sql.NVarChar(25), id)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset);
+            } else {
+                result (true, null);
+            }
+        })
+    }
+
+
+   async getAllByCourseID(id, result) {
+        var pool = await conn;
+        var sqlString = "Select * FROM Assignment Where CourseID = @varID;"
+        return await pool.request()
+        .input('varID', sql.NVarChar(25), id)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset);
             } else {
                 result (true, null);
             }
@@ -43,58 +134,57 @@ module.exports = class Assignment {
     }
 
     async create(newData, result) {
-        try {
-            var pool = await conn;
-            var sqlString = "INSERT INTO Assignment (A_ID, A_Title, A_Desc, A_StartAt, A_DueDate, CourseID) VALUES (@A_ID, @A_Title, @A_Desc, @A_StartAt, @A_DueDate, @CourseID)";
+        var pool = await conn;
+        var sqlString = "INSERT INTO Assignment(A_ID, A_Title, A_Desc, A_StartAt,A_DueDate, A_TextSubmission, A_Comment,CourseID) VALUES(@A_ID, @A_Title, @A_Desc, @A_StartAt,@A_DueDate, @A_TextSubmission, @A_Comment,@CourseID)"
     
-            const request = pool.request();
-            request.input('A_ID', sql.NVarChar(25), newData.A_ID);
-            request.input('A_Title', sql.NVarChar(25), newData.A_Title);
-            request.input('A_Desc', sql.NVarChar(150), newData.A_Desc);
-            request.input('A_StartAt', sql.Date, newData.A_StartAt);
-            request.input('A_DueDate', sql.Date, newData.A_DueDate);
-            request.input('CourseID', sql.NVarChar(150), newData.CourseID);
-
-            const data = await request.query(sqlString);
-            result(null, data);
-        } catch (error) {
-            result(error, null);
-        }
-    }
-    
-
-    async update(newData, result) {
-            var pool = await conn;
-            var sqlString = "UPDATE Assignment SET A_Title = @A_Title, A_Desc = @A_Desc, A_StartAt = @A_StartAt, A_DueDate = @A_DueDate, CourseID = @CourseID) WHERE A_ID = @A_ID"
-            
-            return await pool.request()
+        return await pool.request()
             .input('A_ID', sql.NVarChar(25), newData.A_ID)
-            .input('A_Title', sql.NVarChar(25), newData.A_Title)
+            .input('A_Title', sql.NVarChar(50), newData.A_Title)
             .input('A_Desc', sql.NVarChar(150), newData.A_Desc)
             .input('A_StartAt', sql.Date, newData.A_StartAt)
             .input('A_DueDate', sql.Date, newData.A_DueDate)
+            .input('A_Comment', sql.NVarChar(150), newData.A_Comment)
             .input('CourseID', sql.NVarChar(25), newData.CourseID)
-            .query(sqlString, function(err, data){
-                if (err) {
-                    result(true, null)
-                } else {
-                    result(null, newData)
-                }
-            })
+
+        .query(sqlString, function(err, data) {
+            if (err) {
+                result(true, null)
+            } else {
+                result( null, data)
+            }
+        })
+    }
+
+    async update(newData, result) {
+        var pool = await conn;
+        var sqlString = "UPDATE Assignment SET A_Title = @A_Title, A_Desc = @A_Desc, A_StartAt = @A_StartAt, A_DueDate= @A_DueDate WHERE A_ID = @A_ID"
+        
+        return await pool.request()
+        .input('A_Title', sql.NVarChar(50), newData.A_Title)
+        .input('A_Desc', sql.NVarChar(150), newData.A_Desc)
+        .input('A_StartAt', sql.Date, newData.A_StartAt)
+        .input('A_DueDate', sql.Date, newData.A_DueDate)
+        .query(sqlString, function(err, data){
+            if (err) {
+                result(true, null)
+            } else {
+                result(null, newData)
+            }
+        })
     }
 
     async delete(id, result) {
-            var pool = await conn;
-            var sqlString = "Delete from Assignment where A_ID = @id";
-            return await pool.request()
-            .input('id', sql.NVarChar(25), id)
-            .query(sqlString, function(err, data){
-                if (err){
-                    result(true, null);
-                } else {
-                    result(null, data);
-                }
-            })
-        }
+        var pool = await conn;
+        var sqlString = "DELETE FROM Assignment WHERE A_ID = @id"
+        return await pool.request()
+        .input('id', sql.NVarChar(25), id)
+        .query(sqlString, function(err, data){
+            if (err){
+                result(true, null);
+            } else {
+                result(null, data);
+            }
+        })
     }
+}
 

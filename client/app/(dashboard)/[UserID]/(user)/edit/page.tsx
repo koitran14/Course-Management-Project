@@ -1,21 +1,20 @@
-"use client"
-import { User, getUser } from "@/actions/user-actions";
+import { getUser } from "@/actions/user-actions";
 import { DatePicker } from "@/components/homepage/profile-update/date-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useParams } from "next/navigation";
 import { useState } from "react";
 
-const SettingPage = () => {
-    const params = useParams();
-    const getUserServer = async() => {
-        const result = await getUser(params.UserID as string);
-        setUser(result);
+const EditProfilePage = async ({
+    params
+}:{
+    params: {
+        UserID: string
     }
+}) => {
+    const user = await getUser(params.UserID);
+    const userDOB = new Date(user.UserDOB);
 
-    const [user, setUser] = useState<User | undefined>();
     const [selectedDate, setSelectedDate] = useState<Date | undefined>();
-
 
     return (
         <div className="w-full h-full flex justify-center ">
@@ -28,7 +27,7 @@ const SettingPage = () => {
                         <h1 className="text-lg pl-2 font-semibold text-slate-600">First Name:</h1>
                         <Input 
                             className="md:w-[400px] w-full h-12 border-2 text-md"
-                            placeholder={user?.UserFirstName}
+                            placeholder={user.UserFirstName}
                         />
                     </div>
 
@@ -36,14 +35,14 @@ const SettingPage = () => {
                         <h1 className="text-lg pl-2 font-semibold text-slate-600">Last Name:</h1>
                         <Input 
                             className="md:w-[400px] w-full h-12 border-2 text-md"
-                            placeholder={user?.UserLastName}
+                            placeholder={user.UserLastName}
                         />
                     </div>
 
                     <div className="flex flex-col gap-y-3 md:pt-4 pt-1">
                         <h1 className="text-lg pl-2 font-semibold text-slate-600">Date of birth:</h1>
                         <div className="w-full md:w-[400px]">
-                            <DatePicker selectedDate={user?.UserDOB} onChange={setSelectedDate}/>    
+                            <DatePicker selectedDate={userDOB} onChange={setSelectedDate}/>    
                         </div>
                     </div>
 
@@ -51,7 +50,7 @@ const SettingPage = () => {
                         <h1 className="text-lg pl-2 font-semibold text-slate-600">New email:</h1>
                         <Input 
                             className="md:w-[400px] w-full h-12 border-2 text-md"
-                            placeholder={user?.UserEmail}
+                            placeholder={user.UserEmail}
                             type="email"
                         />
                     </div>
@@ -87,4 +86,4 @@ const SettingPage = () => {
     );
 }
  
-export default SettingPage;
+export default EditProfilePage;
