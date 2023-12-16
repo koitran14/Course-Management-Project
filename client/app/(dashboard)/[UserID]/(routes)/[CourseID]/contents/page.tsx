@@ -6,7 +6,7 @@ import { Title } from "@/components/ui/title";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import AssignmentCard from "@/components/homepage/assignment/As-info-card";
-import { getAnnoucements } from "@/actions/announcement-actions";
+import { getAnnouncements } from "@/actions/announcement-actions";
 
 const C_ContentPage = () => {
     const params = useParams();
@@ -15,7 +15,7 @@ const C_ContentPage = () => {
     const pathname  = usePathname();
 
     const announcements = async(id: string) => {
-        return await getAnnoucements(params.CourseID as String);
+        return await getAnnouncements(params.CourseID as String);
     }
     
     const counter = (announcements !== undefined && announcements !== null) ? announcements?.length : 0;
@@ -23,7 +23,7 @@ const C_ContentPage = () => {
     return (
         <div className="w-full h-full flex flex-col px-2 md:px-16">
             <div className="w-full flex flex-row justify-between items-center py-8 px-4">
-                <Title classname="pl-6">Announcements ({counter})</Title>
+                <Title classname="pl-6">Contents ({counter})</Title>
                 {auth.roleName === 'Teacher' 
                 && ( 
                     <Button className="bg-white hover:bg-indigo-800 text-indigo-800 hover:text-white flex flex-row gap-x-2 border-2 border-indigo-800 rounded-xl hover:shadow-md hover:shadow-zinc-400"

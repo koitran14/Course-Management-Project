@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 
 
@@ -62,6 +63,9 @@ const SettingPage = () => {
         setSuccessMessage('Profile updated successfully');
         setErrorMessage('');
         console.log('User updated successfully:', updatedUser);
+        toast.success("Completely updated.");
+        router.refresh();
+        router.back();
       } else {
         console.error('Failed to update user');
       }

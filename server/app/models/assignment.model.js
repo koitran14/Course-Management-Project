@@ -33,23 +33,27 @@ module.exports = class Assignment {
     async getNearByUserID(id, result) {
         var pool = await conn;
         var sqlString = `
-        SELECT TOP 2
-        Assignment.*,
-        CONVERT(VARCHAR, A_DueDate, 103) AS FormattedDueDate,
-        DATEDIFF(DAY, GETDATE(), A_DueDate) AS DaysLeft
-    FROM 
-        Assignment
-    JOIN 
-        Course ON Assignment.CourseID = Course.CourseID
-    JOIN 
-        Enroll ON Course.CourseID = Enroll.CourseID
-    JOIN 
-        [User] ON Enroll.UserID = [User].UserID
-    WHERE 
-        [User].UserID = @varID
-    ORDER BY 
-        A_DueDate ASC;
-    
+        SELECT *
+        FROM (
+            SELECT 
+                Assignment.*,
+                CONVERT(VARCHAR, A_DueDate, 103) AS FormattedDueDate,
+                DATEDIFF(DAY, GETDATE(), A_DueDate) AS DaysLeft
+            FROM 
+                Assignment
+            JOIN 
+                Course ON Assignment.CourseID = Course.CourseID
+            JOIN 
+                Enroll ON Course.CourseID = Enroll.CourseID
+            JOIN 
+                [User] ON Enroll.UserID = [User].UserID
+            WHERE 
+                [User].UserID = @varID
+                AND DATEDIFF(DAY, GETDATE(), A_DueDate) > 0
+                AND DATEDIFF(DAY, GETDATE(), A_DueDate) < 4
+        ) AS AssignmentWithDates
+        ORDER BY 
+            A_DueDate ASC;
     `;
         return await pool.request()
         .input('varID', sql.NVarChar(25), id)
@@ -65,18 +69,20 @@ module.exports = class Assignment {
     async getNearByCourseID(id, result) {
         var pool = await conn;
         var sqlString = `
-        SELECT TOP 2
-        Assignment.*,
-        CONVERT(VARCHAR, A_DueDate, 103) AS FormattedDueDate,
-        DATEDIFF(DAY, GETDATE(), A_DueDate) AS DaysLeft
-    FROM 
-        Assignment
-    WHERE 
-        Assignment.CourseID = @varID
-    ORDER BY 
-        A_DueDate ASC;
-    
-    `;
+            SELECT
+            Assignment.*,
+            CONVERT(VARCHAR, A_DueDate, 103) AS FormattedDueDate,
+            DATEDIFF(DAY, GETDATE(), A_DueDate) AS DaysLeft
+        FROM 
+            Assignment
+        WHERE 
+            Assignment.CourseID = @varID
+            AND DATEDIFF(DAY, GETDATE(), A_DueDate) < 4
+            AND 
+            DATEDIFF(DAY, GETDATE(), A_DueDate) > 0
+        ORDER BY 
+            A_DueDate ASC;
+        `;
         return await pool.request()
         .input('varID', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){
@@ -87,9 +93,6 @@ module.exports = class Assignment {
             }
         })
     }
-
-    
-
 
     async getAllByUserID(id, result) {
         var pool = await conn;
@@ -104,9 +107,9 @@ module.exports = class Assignment {
         JOIN 
             [User] ON Enroll.UserID = [User].UserID
         WHERE 
-            [User].UserID = @varID;
-        
-    `;
+            [User].UserID = @varID
+            AND DATEDIFF(DAY, GETDATE(), Assign.A_DueDate) > 0;        
+        `;
         return await pool.request()
         .input('varID', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){
@@ -121,7 +124,7 @@ module.exports = class Assignment {
 
    async getAllByCourseID(id, result) {
         var pool = await conn;
-        var sqlString = "Select * FROM Assignment Where CourseID = @varID;"
+        var sqlString = "SELECT * FROM Assignment WHERE CourseID = @varID AND DATEDIFF(DAY, GETDATE(), A_DueDate) > 0;";
         return await pool.request()
         .input('varID', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){
@@ -143,7 +146,6 @@ module.exports = class Assignment {
             .input('A_Desc', sql.NVarChar(150), newData.A_Desc)
             .input('A_StartAt', sql.Date, newData.A_StartAt)
             .input('A_DueDate', sql.Date, newData.A_DueDate)
-            .input('A_Comment', sql.NVarChar(150), newData.A_Comment)
             .input('CourseID', sql.NVarChar(25), newData.CourseID)
 
         .query(sqlString, function(err, data) {

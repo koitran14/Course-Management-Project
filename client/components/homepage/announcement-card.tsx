@@ -46,10 +46,9 @@ export function AnnouncementCards ({
                                 <div className="flex flex-col gap-y-3 w-full px-5">
                                     {data?.slice(0, 2).map((announcement) => (
                                         <div key={announcement.AnID} className="border-b-2 py-3">
-                                         <div >
-                                    <p>{announcement.AnTitle}</p>
-                                                    </div>
-
+                                            <div >
+                                                <p>{announcement.AnTitle}</p>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>

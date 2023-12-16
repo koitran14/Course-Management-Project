@@ -6,7 +6,7 @@ import { Title } from "@/components/ui/title";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import AssignmentCard from "@/components/homepage/assignment/As-info-card";
-import { getAnnoucements } from "@/actions/announcement-actions";
+import { getAnnouncements } from "@/actions/announcement-actions";
 
 const C_AnnouncementPage = () => {
     const params = useParams();
@@ -15,7 +15,7 @@ const C_AnnouncementPage = () => {
     const pathname  = usePathname();
 
     const announcements = async(id: string) => {
-        return await getAnnoucements(params.CourseID as String);
+        return await getAnnouncements(params.CourseID as String);
     }
     
     const counter = (announcements !== undefined && announcements !== null) ? announcements?.length : 0;

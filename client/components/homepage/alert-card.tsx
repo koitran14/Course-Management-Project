@@ -47,11 +47,19 @@ export function AlertCards ({
                                     {data?.slice(0, 2).map((assignment) => (
                                         <div key={assignment.A_ID} className="border-b-2 py-3">
                                             <Link href={pathname+ (`/${assignment.A_ID}`)} className="py-4">
-                                            <p>
-  <span style={{ color: 'red' }}>Due date: {assignment.FormattedDueDate}</span>  <span style={{ color: 'gray' }}> ({assignment.DaysLeft} days left)</span>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{assignment.A_Title}
-
-</p>
+                                                <p className="flex flex-col gap-y-1">
+                                                    <div className="flex flex-row items-center justify-between">
+                                                        <h1>
+                                                            {assignment.A_Title}    
+                                                        </h1>
+                                                        <span style={{ color: 'gray' }}> 
+                                                            {assignment.DaysLeft} days left
+                                                        </span>
+                                                    </div>
+                                                    <span style={{ color: 'red' }}>
+                                                        Due date: {assignment.FormattedDueDate}
+                                                    </span>  
+                                                </p>    
                                             </Link>
                                         </div>
                                     ))}
@@ -66,11 +74,19 @@ export function AlertCards ({
                                         {data.map((assignment) => (
                                             <div key={assignment.A_ID} className="border-b-2 py-3">
                                                 <Link href={pathname+ (`/${assignment.A_ID}`)}>
-                                                <p>
-  <span style={{ color: 'red' }}>Due date: {assignment.FormattedDueDate}</span>  <span style={{ color: 'gray' }}> ({assignment.DaysLeft} days left)</span>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{assignment.A_Title}
-
-</p>
+                                                    <p className="flex flex-col gap-y-1">
+                                                        <div className="flex flex-row items-center justify-between">
+                                                            <h1>
+                                                                {assignment.A_Title}    
+                                                            </h1>
+                                                            <span style={{ color: 'gray' }}> 
+                                                                {assignment.DaysLeft} days left
+                                                            </span>
+                                                        </div>
+                                                        <span style={{ color: 'red' }}>
+                                                            Due date: {assignment.FormattedDueDate}
+                                                        </span>  
+                                                    </p>    
                                                 </Link>
                                             </div>
                                         ))}
