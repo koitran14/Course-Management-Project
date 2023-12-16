@@ -81,15 +81,15 @@ INSERT INTO Announcement (AnID, AnTitle, AnDesc, AnDate, CourseID) VALUES
 
 
 -- Assignment data
-INSERT INTO Assignment (A_ID, A_Title, A_Desc, A_StartAt, A_DueDate, A_TextSubmission, A_Comment, CourseID) VALUES
-('AS001', 'Variables Exercise', 'Exercise on variables', '2023-01-25', '2023-02-05', 'Submit your code here', NULL, 'C001'),
-('AS002', 'Loop Structures Task', 'Task on loop structures', '2023-02-05', '2023-02-15', 'Upload your solutions', NULL, 'C001'),
-('AS003', 'Functions Quiz', 'Quiz on functions and methods', '2023-02-20', '2023-02-28', 'Answer the questions provided', NULL, 'C001'),
-('AS004', 'Sorting Algorithms Project', 'Project on sorting algorithms', '2023-02-28', '2023-03-15', 'Submit your project report', NULL, 'C002'),
-('AS005', 'Graph Theory Assignment', 'Assignment on graph theory', '2023-03-10', '2023-03-25', 'Submit your solutions', NULL, 'C002'),
-('AS006', 'Dynamic Programming Task', 'Task on dynamic programming concepts', '2023-03-20', '2023-04-05', 'Upload your solutions', NULL, 'C002'),
-('AS007', 'Stacks and Queues Exercise', 'Exercise on stacks and queues', '2023-03-25', '2023-04-10', 'Submit your code here', NULL, 'C003'),
-('AS008', 'Binary Trees Quiz', 'Quiz on binary trees', '2023-04-05', '2023-04-20', 'Answer the provided questions', NULL, 'C003'),
-('AS009', 'Hash Tables Project', 'Project on hash tables', '2023-04-15', '2023-04-30', 'Submit your project report', NULL, 'C003')
+INSERT INTO Assignment (A_ID, A_Title, A_Desc, A_StartAt, A_DueDate, CourseID) VALUES
+('AS001', 'Variables Exercise', 'Exercise on variables', '2023-01-25', '2023-02-05', 'C001'),
+('AS002', 'Loop Structures Task', 'Task on loop structures', '2023-02-05', '2023-02-15', 'C001'),
+('AS003', 'Functions Quiz', 'Quiz on functions and methods', '2023-02-20', '2023-02-28', 'C001'),
+('AS004', 'Sorting Algorithms Project', 'Project on sorting algorithms', '2023-02-28', '2023-03-15', 'C002'),
+('AS005', 'Graph Theory Assignment', 'Assignment on graph theory', '2023-03-10', '2023-03-25', 'C002'),
+('AS006', 'Dynamic Programming Task', 'Task on dynamic programming concepts', '2023-03-20', '2023-04-05','C002'),
+('AS007', 'Stacks and Queues Exercise', 'Exercise on stacks and queues', '2023-03-25', '2023-04-10', 'C003'),
+('AS008', 'Binary Trees Quiz', 'Quiz on binary trees', '2023-04-05', '2023-04-20', 'C003'),
+('AS009', 'Hash Tables Project', 'Project on hash tables', '2023-04-15', '2023-04-30', 'C003')
 -- ...Add more assignment entries for other courses as needed
 ;

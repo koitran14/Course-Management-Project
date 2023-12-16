@@ -1,7 +1,7 @@
 'use client'
 
 import { ChevronDown } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button"
 import { useState } from "react";
 import { Course } from "@/actions/course-actions";
 import Link from "next/link";

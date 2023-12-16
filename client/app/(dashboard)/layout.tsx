@@ -26,7 +26,7 @@ const GeneralLayoutForPage = ({
                 <div className='w-full fixed top-0 h-28 z-50'>
                     <NavBar />
                 </div>
-                <div className="h-full w-full pt-28 absolute top-0 left-0 md:px-[120px] sm:px-8 px-0 z-10 overflow-y-scroll">
+                <div className="h-full w-full pt-28 absolute top-0 left-0 md:px-[200px] px-0 z-10 overflow-y-scroll">
                     {children}
                 </div>
             </div>  

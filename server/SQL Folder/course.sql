@@ -62,8 +62,6 @@ CREATE TABLE Assignment (
     A_Desc VARCHAR(150),
     A_StartAt DATE,
     A_DueDate DATE,
-    A_TextSubmission VARCHAR(500),
-    A_Comment VARCHAR(150),
     CourseID VARCHAR(25),
 );
 

@@ -1,9 +1,7 @@
-import useAuth from "@/hooks/useAuth";
-
 export interface Course {
     CourseID: string,
     CourseName: string,
-    TutorID: string, 
+    UserID: string, 
     DeptID: string
 }
 
