@@ -27,10 +27,13 @@ exports.createUser = async (req, res) => {
 }
 
 exports.updateUser = async (req, res) => {
-    model.update(req.body, function(err, data){
-        res.send({result: data, error: err});
-    })
-}
+    model.update(req.params.id, req.body, (err, data) => {
+      if (err) {
+        return res.status(400).send({ result: null, error: 'Bad Request' });
+      }
+      res.send({ result: data, error: null });
+    });
+  };
 
 exports.deleteUserByID = async (req, res) => {
     model.delete(req.params.id, function(err, data){

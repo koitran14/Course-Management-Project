@@ -35,3 +35,20 @@ export async function createUser(newData: User): Promise<User> {
     }).then((data) => data.json()); 
     return res.result;
 }
+
+export async function updateUser(id: string, updatedUserData: Partial<User>): Promise<User> {
+    const res = await fetch(`http://localhost:8080/api/user/${id}`, {
+        method: "PUT", 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedUserData),
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to update user: ${res.status} - ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    return data.result;
+}
