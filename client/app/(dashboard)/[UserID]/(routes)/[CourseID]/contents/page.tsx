@@ -6,19 +6,27 @@ import { Title } from "@/components/ui/title";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import AssignmentCard from "@/components/homepage/assignment/As-info-card";
-import { getAnnouncements } from "@/actions/announcement-actions";
+import { useState, useEffect } from "react";
+import { Content, getContentsByCourseID } from "@/actions/content-actions";
 
 const C_ContentPage = () => {
     const params = useParams();
     const { auth } = useAuth();
     const router = useRouter();
     const pathname  = usePathname();
+    const [contents, setContents] = useState<Content[]>();
 
-    const announcements = async(id: string) => {
-        return await getAnnouncements(params.CourseID as String);
+    const getcontents = async(id: string) => {
+        const result = await getContentsByCourseID(id);
+        setContents(result);
+        return null;
     }
     
-    const counter = (announcements !== undefined && announcements !== null) ? announcements?.length : 0;
+    useEffect(() => {
+        getcontents(params.CourseID as string);
+    },[params.CourseID])
+    
+    const counter = (contents !== undefined && contents !== null) ? contents?.length : 0;
 
     return (
         <div className="w-full h-full flex flex-col px-2 md:px-16">

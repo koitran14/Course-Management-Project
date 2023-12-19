@@ -20,7 +20,7 @@ export function NewCards ({
     const pathname = usePathname();
 
     const toggleExpansion = () => {
-        {(data !== undefined && data !== null)  && (
+        {(data !== undefined && data !== null && data.length > 2)  && (
             setIsExpanded(!isExpanded)
         )}
     }

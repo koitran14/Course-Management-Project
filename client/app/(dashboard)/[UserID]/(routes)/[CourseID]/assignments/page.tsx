@@ -1,22 +1,30 @@
 "use client"
 
-import { getAssignmentsByCourseID } from "@/actions/assignment-actions";
+import { Assignment, getAssignmentsByCourseID } from "@/actions/assignment-actions";
 import useAuth from "@/hooks/useAuth";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { Title } from "@/components/ui/title";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import AssignmentCard from "@/components/homepage/assignment/As-info-card";
+import { useState, useEffect } from "react";
 
 const C_AssignmentPage = () => {
     const params = useParams();
     const { auth } = useAuth();
     const router = useRouter();
     const pathname  = usePathname();
+    const [assignment, setAssignments] = useState<Assignment[]>();
 
-    const assignment = async(id: string) => {
-        return await getAssignmentsByCourseID(params.CourseID as String);
+    const getassignments = async(id: string) => {
+        const result = await getAssignmentsByCourseID(id);
+        setAssignments(result);
+        return null;
     }
+    
+    useEffect(() => {
+        getassignments(params.CourseID as string);
+    },[params.CourseID])
     
     const counter = (assignment !== undefined && assignment !== null) ? assignment?.length : 0;
 

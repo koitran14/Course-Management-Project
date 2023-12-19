@@ -20,7 +20,7 @@ export function AnnouncementCards ({
     const pathname = usePathname();
 
     const toggleExpansion = () => {
-        {(data !== undefined && data !== null)  && (
+        {(data !== undefined && data !== null && data.length > 2)  && (
             setIsExpanded(!isExpanded)
         )}
     }
@@ -59,13 +59,19 @@ export function AnnouncementCards ({
                                     <p className="italic text-zinc-500 justify-center flex w-full">No data.</p>
                                 ) : (
                                     <div className="flex flex-col gap-y-3 w-full px-5">
-                                        {data.map((announcement) => (
+                                        {data.slice(0, 6).map((announcement) => (
                                             <div key={announcement.AnID} className="border-b-2 py-3">
                                                 <Link href={pathname+ (`/${announcement.AnID}`)}>
                                                     <p>{announcement.AnTitle}</p>
                                                 </Link>
                                             </div>
                                         ))}
+
+                                        {data.length > 6 && (
+                                            <Link href={href ? href: ''}>
+                                                <p className="pt-2  w-full flex items-center justify-end text-slate-400">More...</p>
+                                            </Link>
+                                        )}
                                     </div>
                                 )}
                             </div>

@@ -138,14 +138,14 @@ module.exports = class Assignment {
 
     async create(newData, result) {
         var pool = await conn;
-        var sqlString = "INSERT INTO Assignment(A_ID, A_Title, A_Desc, A_StartAt,A_DueDate, A_TextSubmission, A_Comment,CourseID) VALUES(@A_ID, @A_Title, @A_Desc, @A_StartAt,@A_DueDate, @A_TextSubmission, @A_Comment,@CourseID)"
+        var sqlString = "INSERT INTO Assignment(A_ID, A_Title, A_Desc, A_StartAt, A_DueDate, CourseID) VALUES(@A_ID, @A_Title, @A_Desc, @A_StartAt,@A_DueDate, @CourseID)"
     
         return await pool.request()
             .input('A_ID', sql.NVarChar(25), newData.A_ID)
             .input('A_Title', sql.NVarChar(50), newData.A_Title)
             .input('A_Desc', sql.NVarChar(150), newData.A_Desc)
-            .input('A_StartAt', sql.Date, newData.A_StartAt)
-            .input('A_DueDate', sql.Date, newData.A_DueDate)
+            .input('A_StartAt', sql.DateTime, newData.A_StartAt)
+            .input('A_DueDate', sql.DateTime, newData.A_DueDate)
             .input('CourseID', sql.NVarChar(25), newData.CourseID)
 
         .query(sqlString, function(err, data) {
@@ -164,8 +164,8 @@ module.exports = class Assignment {
         return await pool.request()
         .input('A_Title', sql.NVarChar(50), newData.A_Title)
         .input('A_Desc', sql.NVarChar(150), newData.A_Desc)
-        .input('A_StartAt', sql.Date, newData.A_StartAt)
-        .input('A_DueDate', sql.Date, newData.A_DueDate)
+        .input('A_StartAt', sql.DateTime, newData.A_StartAt)
+        .input('A_DueDate', sql.DateTime, newData.A_DueDate)
         .query(sqlString, function(err, data){
             if (err) {
                 result(true, null)

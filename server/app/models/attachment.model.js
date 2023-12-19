@@ -38,7 +38,7 @@ module.exports = class Attachment {
             request.input('Attach_FileName', sql.NVarChar(25), newData.Attach_FileName);
             request.input('Attach_FileType', sql.NVarChar(150), newData.Attach_FileType);
             request.input('Attach_Size', sql.Float, newData.Attach_Size);
-            request.input('Attach_Date', sql.Date, newData.Attach_Date);
+            request.input('Attach_Date', sql.DateTime, newData.Attach_Date);
             request.input('Attach_URL', sql.NVarChar(150), newData.Attach_URL);
             request.input('CourseID', sql.NVarChar(150), newData.CourseID);
             request.input('A_ID', sql.NVarChar(150), newData.A_ID);
@@ -62,7 +62,7 @@ module.exports = class Attachment {
             .input('Attach_FileName', sql.NVarChar(25), newData.Attach_FileName)
             .input('Attach_FileType', sql.NVarChar(150), newData.Attach_FileType)
             .input('Attach_Size', sql.Float, newData.Attach_Size)
-            .input('Attach_Date', sql.Date, newData.Attach_Date)
+            .input('Attach_Date', sql.DateTime, newData.Attach_Date)
             .input('Attach_URL', sql.NVarChar(150), newData.Attach_URL)
             .input('CourseID', sql.NVarChar(150), newData.CourseID)
             .input('A_ID', sql.NVarChar(150), newData.A_ID)

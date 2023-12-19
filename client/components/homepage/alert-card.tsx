@@ -20,7 +20,7 @@ export function AlertCards ({
     const pathname = usePathname();
 
     const toggleExpansion = () => {
-        {(data !== undefined && data !== null)  && (
+        {(data !== undefined && data !== null && data.length > 2)  && (
             setIsExpanded(!isExpanded)
         )}
     }
@@ -90,7 +90,13 @@ export function AlertCards ({
                                                 </Link>
                                             </div>
                                         ))}
+                                        {data.length > 6 && (
+                                            <Link href={href ? href: ''}>
+                                                <p className="pt-2  w-full flex items-center justify-end text-slate-400">More...</p>
+                                            </Link>
+                                        )}
                                     </div>
+                                    
                                 )}
                             </div>
                             )}  

@@ -51,7 +51,7 @@ module.exports = class Content {
             .input('ConID', sql.NVarChar(25), newData.ConID)
             .input('ConTitle', sql.NVarChar(50), newData.ConTitle)
             .input('ConDesc', sql.NVarChar(150), newData.ConDesc)
-            .input('ConDate', sql.Date, newData.ConDate)
+            .input('ConDate', sql.DateTime, newData.ConDate)
             .input('CourseID', sql.NVarChar(25), newData.CourseID)
         .query(sqlString, function(err, data) {
             if (err) {
@@ -69,7 +69,7 @@ module.exports = class Content {
         return await pool.request()
         .input('ConTitle', sql.NVarChar(25), newData.Contitle)
         .input('ConDesc', sql.NVarChar(25), newData.ConDesc)
-        .input('ConDate', sql.Date, newData.ConDate)
+        .input('ConDate', sql.DateTime, newData.ConDate)
         .query(sqlString, function(err, data){
             if (err) {
                 result(true, null)

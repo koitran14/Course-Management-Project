@@ -51,7 +51,7 @@ module.exports = class Announcement {
 
    async getAllByCourseID(id, result) {
         var pool = await conn;
-        var sqlString = "Select * from Announcement Where CourseID = @varID;"
+        var sqlString = "SELECT *, DATEDIFF(day, GETDATE(), AnDate) AS DayDiff FROM Announcement WHERE CourseID = @varID ORDER BY DayDiff DESC;"
         return await pool.request()
         .input('varID', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){
@@ -71,11 +71,11 @@ module.exports = class Announcement {
             .input('AnID', sql.NVarChar(25), newData.AnID)
             .input('AnTitle', sql.NVarChar(50), newData.AnTitle)
             .input('AnDesc', sql.NVarChar(150), newData.AnDesc)
-            .input('AnDate', sql.Date, newData.AnDate)
+            .input('AnDate', sql.DateTime, newData.AnDate)
             .input('CourseID', sql.NVarChar(25), newData.CourseID)
         .query(sqlString, function(err, data) {
             if (err) {
-                result(true, null)
+                result(err, null)
             } else {
                 result( null, data)
             }
@@ -89,7 +89,7 @@ module.exports = class Announcement {
         return await pool.request()
         .input('AnTitle', sql.NVarChar(25), newData.AnTitle)
         .input('AnDesc', sql.NVarChar(25), newData.AnDesc)
-        .input('AnDate', sql.Date, newData.AnDate)
+        .input('AnDate', sql.DateTime, newData.AnDate)
         .query(sqlString, function(err, data){
             if (err) {
                 result(true, null)

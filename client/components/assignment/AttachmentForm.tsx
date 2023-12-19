@@ -59,9 +59,8 @@ const AttachmentForm = ({
     }
 
     return(
-        <div className="mt-6 border-2 hover:shadow-md hover:shadow-zinc-300 bg-white rounded-md px-4 py-2">
-            <div className="font-medium flex items-center justify-between">
-                File attachments
+        <div className=" border-2 hover:shadow-md hover:shadow-zinc-300 bg-white rounded-md px-4 py-2">
+            <div className="font-medium flex items-center">
                 <Button variant="ghost" onClick={toggleEdit}>
                     {isEditing ? (
                         <>Cancel</>

@@ -15,7 +15,7 @@ CREATE TABLE [User] (
     UserLastName VARCHAR(25),
     UserFirstName varchar(25),
     UserEmail varchar(50),
-    UserDOB DATE,
+    UserDOB DATETIME,
     UserUniID VARCHAR(25),
     RoleID VARCHAR(25),
     DeptID VARCHAR(25),
@@ -28,7 +28,7 @@ CREATE TABLE Department(
 
 CREATE TABLE Enroll (
     EnrollID varchar(25) PRIMARY KEY,
-    EnrollDate Date,
+    EnrollDate DATETIME,
     UserID VARCHAR(25),
     CourseID VARCHAR(25)
 );
@@ -44,7 +44,7 @@ CREATE TABLE Content (
     ConID VARCHAR(25) PRIMARY KEY,
     ConTitle VARCHAR (50),
     ConDesc VARCHAR (150),
-    ConDate VARCHAR (200),
+    ConDate DATETIME,
     CourseID VARCHAR(25),
 );
 
@@ -52,7 +52,7 @@ CREATE TABLE Announcement(
     AnID VARCHAR(25) PRIMARY KEY,
     AnTitle VARCHAR(50),
     AnDesc VARCHAR(150),
-    AnDate DATE,
+    AnDate DATETIME,
     CourseID VARCHAR(25),
 );
 
@@ -60,8 +60,8 @@ CREATE TABLE Assignment (
     A_ID VARCHAR(25) PRIMARY KEY,
     A_Title VARCHAR(50),
     A_Desc VARCHAR(150),
-    A_StartAt DATE,
-    A_DueDate DATE,
+    A_StartAt DATETIME,
+    A_DueDate DATETIME,
     CourseID VARCHAR(25),
 );
 
@@ -70,8 +70,8 @@ CREATE TABLE Attachment (
     Attach_FileName VARCHAR(50),
     Attach_FileType VARCHAR(10),
     Attach_Size FLOAT,
-    Attach_Date DATE,
-    Attach_URL DATE,
+    Attach_Date DATETIME,
+    Attach_URL DATETIME,
     CourseID VARCHAR(25),
     A_ID VARCHAR(25),
     AnID VARCHAR(25),

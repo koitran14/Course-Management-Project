@@ -4,18 +4,23 @@ import AttachmentForm from '@/components/assignment/AttachmentForm';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useParams } from 'next/navigation';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
+import { generateUniqueContentID } from '@/actions/content-actions';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const ContentForm = () => {
   const params = useParams();
   const router = useRouter();
+  const now  = new Date();
+  const [validTitle, setValidTitle] = useState(false);
+  const [validDesc, setValidDesc] = useState(false);
 
-  const [assignment, setAssignment] = useState({
-    A_Title: '',
-    A_Desc: '',
-    A_StartAt: '',
-    A_DueDate: '',
+  const [content, setAssignment] = useState({
+    ConTitle: '',
+    ConDesc: '',
+    ConDate: now,
     CourseID: params.CourseID,
   });
 
@@ -23,55 +28,64 @@ const ContentForm = () => {
     e.preventDefault();
     
     const { name, value } = e.target;
-    setAssignment({ ...assignment, [name]: value });
+    setAssignment({ ...content, [name]: value });
   };
 
+  useEffect(() => {
+    setValidTitle(content.ConTitle.length > 1)
+  },[content.ConTitle])
+
+  useEffect(() => {
+    setValidDesc(content.ConDesc.length > 1)
+  },[content.ConDesc])
+  
   const handleCancel = () => {
     router.back();
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // You can handle form submission here, for example, sending the data to an API
-    console.log('Assignment Data:', assignment);
-    setAssignment({
-      A_Title: '',
-      A_Desc: '',
-      A_StartAt: '',
-      A_DueDate: '',
-      CourseID: params.CourseID,
-    });
+    if (!validTitle || !validDesc) {
+      return;
+    }
+
+    const uniqueID = await generateUniqueContentID();
+    const contentWithID = {
+      ConID: uniqueID,
+      ...content,
+    };
+    console.log(contentWithID);
+    try {
+      const response = await axios.post('http://localhost:8080/api/content', contentWithID);
+      console.log('Announcement created:', response.data);
+      if (response.status === 200) {
+        toast.success('Created successfully.');
+        router.back();
+      } else {
+        toast.error("There's something wrong.");
+      }
+    } catch (error) {
+      toast.error('Error: ' + error);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='flex flex-col gap-y-8'>
       <label>
         Title:
-        <Input type="text" name="A_Title" value={assignment.A_Title} onChange={handleChange} className='w-[50%]'/>
+        <Input type="text" name="ConTitle" value={content.ConTitle} onChange={handleChange} className='w-[50%]'/>
       </label>
-      <br />
-      <div className='grid grid-cols-2 gap-x-3'>
-        <label>
-          Start Date:
-          <Input type="datetime-local" name="A_StartAt" value={assignment.A_StartAt} onChange={handleChange} />
-        </label>
-        <label>
-          Due Date:
-          <Input type="datetime-local" name="A_DueDate" value={assignment.A_DueDate} onChange={handleChange} />
-        </label>
-      </div>
-      <br />
       <label>
         Description:
-        <textarea name="A_Desc" value={assignment.A_Desc} onChange={handleChange} className='w-full h-20 rounded-md border border-zinc-300'/>
+        <textarea name="ConDesc" value={content.ConDesc} onChange={handleChange} className='w-full h-40 rounded-md border border-zinc-300'/>
       </label>
-      <br />
-      <div>
+      <div className='flex flex-col gap-y-1'>
+        <h1>Attachment:</h1>
         <AttachmentForm />
       </div>
       <div className='pt-5 flex flex-row items-center justify-end gap-x-2'>
         <Button variant={"outline"} onClick={handleCancel}>Cancel</Button>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={!validTitle || !validDesc}>Submit</Button>
       </div>
     </form>
   );

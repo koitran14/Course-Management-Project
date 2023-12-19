@@ -28,6 +28,20 @@ export async function getAssignmentsByCourseID(id: String): Promise<Assignment[]
      return await data.result;
  
  }
+
+ export async function generateUniqueAssignment() {
+    const randomValue = Math.floor(Math.random() * 100000);
+    const paddedRandom = String(randomValue).padStart(4, '0');
+    const uniqueID = `AS${paddedRandom}`;
+    const available = await getAssignment(uniqueID);
+
+    if (!available) {
+        return uniqueID;
+    } else {
+        return generateUniqueAssignment();
+    }
+}
+
  
  
  export async function getAssignmentsByStudentID(id: String): Promise<Assignment[]> {

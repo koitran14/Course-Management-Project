@@ -4,62 +4,92 @@ import AttachmentForm from '@/components/assignment/AttachmentForm';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useParams } from 'next/navigation';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
+import { generateUniqueAnnouncementID } from '@/actions/announcement-actions';
+import axios from 'axios';
+import toast from 'react-hot-toast'
+
 
 const AnnouncementForm = () => {
   const params = useParams();
   const router = useRouter();
   const now = new Date();
 
-  const [assignment, setAssignment] = useState({
+  const [validTitle, setValidTitle] = useState(false);
+  const [validDesc, setValidDesc] = useState(false);
+ 
+  const [announcement, setAnnouncement] = useState({
     AnTitle: '',
     AnDesc: '',
-    AnDate: now.getDate(),
+    AnDate: now,
     CourseID: params.CourseID,
   });
+
+  useEffect(() => {
+    setValidTitle(announcement.AnTitle.length > 1)
+  },[announcement.AnTitle])
+
+  useEffect(() => {
+    setValidDesc(announcement.AnDesc.length > 1)
+  },[announcement.AnDesc])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
     
     const { name, value } = e.target;
-    setAssignment({ ...assignment, [name]: value });
+    setAnnouncement({ ...announcement, [name]: value });
   };
 
   const handleCancel = () => {
     router.back();
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // You can handle form submission here, for example, sending the data to an API
-    console.log('Assignment Data:', assignment);
-    setAssignment({
-        AnTitle: '',
-        AnDesc: '',
-        AnDate: now.getDate(),
-        CourseID: params.CourseID,
-    });
+    if (!validTitle || !validDesc) {
+      return;
+    }
+
+    const uniqueID = await generateUniqueAnnouncementID();
+    const announcementWithID = {
+      AnID: uniqueID,
+      ...announcement,
+    };
+    console.log(announcementWithID);
+    try {
+      const response = await axios.post('http://localhost:8080/api/announcement', announcementWithID);
+      console.log('Content created:', response.data);
+      if (response.status === 200) {
+        toast.success('Created successfully.');
+        router.back();
+      } else {
+        toast.error("There's something wrong.");
+      }
+    } catch (error) {
+      toast.error('Error: ' + error);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
+    <form onSubmit={handleSubmit} className='flex flex-col gap-y-2'>
+      <label className='flex flex-col gap-y-1'>
         Title:
-        <Input type="text" name="A_Title" value={assignment.AnTitle} onChange={handleChange} className='w-[50%]'/>
+        <Input type="text" name="AnTitle" value={announcement.AnTitle} onChange={handleChange} className='w-[50%]'/>
       </label>
       <br />
-      <label>
+      <label className='flex flex-col gap-y-1'>
         Description:
-        <textarea name="A_Desc" value={assignment.AnDesc} onChange={handleChange} className='w-full h-20 rounded-md border border-zinc-300'/>
+        <textarea name="AnDesc" value={announcement.AnDesc} onChange={handleChange} className='w-full h-40 rounded-md border border-zinc-300'/>
       </label>
       <br />
-      <div>
+      <div className='flex flex-col gap-y-1'>
+        Attachment:
         <AttachmentForm />
       </div>
       <div className='pt-5 flex flex-row items-center justify-end gap-x-2'>
         <Button variant={"outline"} onClick={handleCancel}>Cancel</Button>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={!validTitle || !validDesc} className='bg-indigo-800'>Submit</Button>
       </div>
     </form>
   );
