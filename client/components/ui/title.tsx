@@ -23,7 +23,7 @@ export function Author({
     classname?: string 
 }) {
     return (
-        <h1 className={cn('text-sm font-bold text-slate-500', classname)}>
+        <h1 className={cn('text-sm font-semibold text-zinc-500', classname)}>
             {children}
         </h1>
     );
@@ -37,7 +37,7 @@ export function Description({
     classname?: string 
 }) {
     return (
-        <h1 className={cn('text-sm font-semibold text-slate-500', classname)}>
+        <h1 className={cn('text-sm font-medium text-slate-500', classname)}>
             {children}
         </h1>
     );

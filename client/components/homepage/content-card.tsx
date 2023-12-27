@@ -46,7 +46,7 @@ export function ContentCards ({
                                 <div className="flex flex-col gap-y-3 w-full px-5">
                                     {data?.slice(0, 2).map((content) => (
                                         <div key={content.ConID} className="border-b-2 py-3">
-                                            <Link href={pathname+ (`/${content.ConID}`)} className="py-4">
+                                            <Link href={pathname+ (`/contents/${content.ConID}`)} className="py-4">
                                                 <p>{content.ConTitle}</p>
                                             </Link>
                                         </div>
@@ -61,7 +61,7 @@ export function ContentCards ({
                                     <div className="flex flex-col gap-y-3 w-full px-5">
                                         {data.map((content) => (
                                             <div key={content.ConID} className="border-b-2 py-3">
-                                                <Link href={pathname+ (`/${content.ConID}`)}>
+                                                <Link href={pathname+ (`/contents/${content.ConID}`)}>
                                                     <p>{content.ConTitle}</p>
                                                 </Link>
                                             </div>

@@ -1,5 +1,4 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { AuthServer } from "@/hooks/useAuth";
  
 const f = createUploadthing();
 
@@ -10,6 +9,7 @@ export const ourFileRouter = {
     console.log("Upload complete");
     console.log("file url", file.url);
     console.log("Metadata: ", metadata)
+    console.log("File name: ", file.name)
   }),
 
 } satisfies FileRouter;

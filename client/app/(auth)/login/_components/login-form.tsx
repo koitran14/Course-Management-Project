@@ -73,25 +73,29 @@ const Login = () => {
             <div className='h-fit w-full px-3 flex flex-col gap-y-2'>
                 <h1 className='text-3xl font-semibold md:hidden block text-indigo-800'>Sign In</h1>
                 <form className='flex flex-col gap-y-4' onSubmit={handleSubmit}>
-                    <label htmlFor="username">Username:</label>
-                    <Input 
-                        type="text" 
-                        id="username"
-                        ref={userRef}
-                        autoComplete='off' 
-                        onChange={(e) => setUser(e.target.value)}  
-                        value={user}
-                        required  
-                    />
+                    <div className='flex flex-col gap-y-2'>
+                        <label htmlFor="username">Username:</label>
+                        <Input 
+                            type="text" 
+                            id="username"
+                            ref={userRef}
+                            autoComplete='off' 
+                            onChange={(e) => setUser(e.target.value)}  
+                            value={user}
+                            required  
+                        />
+                    </div>
 
-                    <label htmlFor="password">Password:</label>
-                    <Input 
-                        type='password'
-                        id='password'
-                        onChange={(e) => setPwd(e.target.value)}
-                        value={pwd}
-                        required
-                    />
+                    <div className='flex flex-col gap-y-2'>
+                        <label htmlFor="password">Password:</label>
+                        <Input 
+                            type='password'
+                            id='password'
+                            onChange={(e) => setPwd(e.target.value)}
+                            value={pwd}
+                            required
+                        />
+                    </div>
                     <Button className='bg-blue-800 hover:opacity-90 hover:bg-blue-800 hover:shadow-md hover:shadow-zinc-400/70'>Sign In</Button>
                 </form>
                 <span className='relative w-full border-b-2 border-zinc-500/50'/>

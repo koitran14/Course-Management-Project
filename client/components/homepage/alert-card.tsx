@@ -1,11 +1,11 @@
 'use client'
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Clock } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { Assignment} from "@/actions/assignment-actions";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 
 export function AlertCards ({
     title,
@@ -17,7 +17,7 @@ export function AlertCards ({
     href?: string;
 }) {
     const [isExpanded, setIsExpanded] = useState(false);
-    const pathname = usePathname();
+    const params = useParams();
 
     const toggleExpansion = () => {
         {(data !== undefined && data !== null && data.length > 2)  && (
@@ -46,17 +46,18 @@ export function AlertCards ({
                                 <div className="flex flex-col gap-y-3 w-full px-5">
                                     {data?.slice(0, 2).map((assignment) => (
                                         <div key={assignment.A_ID} className="border-b-2 py-3">
-                                            <Link href={pathname+ (`/${assignment.A_ID}`)} className="py-4">
+                                            <Link href={`/${params.UserID}/${assignment.CourseID}/assignments/${assignment.A_ID}`} className="py-4">
                                                 <p className="flex flex-col gap-y-1">
                                                     <div className="flex flex-row items-center justify-between">
-                                                        <h1>
+                                                        <h1 className="text-md">
                                                             {assignment.A_Title}    
                                                         </h1>
                                                         <span style={{ color: 'gray' }}> 
                                                             {assignment.DaysLeft} days left
                                                         </span>
                                                     </div>
-                                                    <span style={{ color: 'red' }}>
+                                                    <span className="text-md flex flex-row items-center text-red-500 font-medium">
+                                                        <Clock className="pr-2"/>
                                                         Due date: {assignment.FormattedDueDate}
                                                     </span>  
                                                 </p>    
@@ -73,7 +74,7 @@ export function AlertCards ({
                                     <div className="flex flex-col gap-y-3 w-full px-5">
                                         {data.map((assignment) => (
                                             <div key={assignment.A_ID} className="border-b-2 py-3">
-                                                <Link href={pathname+ (`/${assignment.A_ID}`)}>
+                                                <Link href={`/${params.UserID}/${assignment.CourseID}/assignments/${assignment.A_ID}`}>
                                                     <p className="flex flex-col gap-y-1">
                                                         <div className="flex flex-row items-center justify-between">
                                                             <h1>

@@ -5,9 +5,10 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { Title } from "@/components/ui/title";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
-import AssignmentCard from "@/components/homepage/assignment/As-info-card";
+import InfoCard from "@/components/homepage/assignment/As-info-card";
 import { useState, useEffect } from "react";
 import { Content, getContentsByCourseID } from "@/actions/content-actions";
+import { formatDate } from "@/actions/announcement-actions";
 
 const C_ContentPage = () => {
     const params = useParams();
@@ -25,7 +26,7 @@ const C_ContentPage = () => {
     useEffect(() => {
         getcontents(params.CourseID as string);
     },[params.CourseID])
-    
+
     const counter = (contents !== undefined && contents !== null) ? contents?.length : 0;
 
     return (
@@ -43,7 +44,15 @@ const C_ContentPage = () => {
                 )}
             </div>
             <div className="flex flex-col gap-y-5 px-3">
-               <AssignmentCard />
+                {contents && contents.length > 0 ? (
+                    contents.map((data) => (
+                        <div key={data.ConID}>
+                            <InfoCard title={data.ConTitle} description={data.ConDesc} time={formatDate(data.ConDate)} href={`/${params.UserID}/${data.CourseID}/contents/${data.ConID}`} deleteApi={`${process.env.NEXT_PUBLIC_API_URL}/content/${data.ConID}`}/>
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-slate-400 text-sm font-medium">No data.</p>
+                )}
             </div>
         </div>
     );

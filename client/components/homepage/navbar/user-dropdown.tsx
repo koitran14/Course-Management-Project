@@ -23,7 +23,7 @@ const UserDropDown = () => {
     const params = useParams();
     
     const signOut = () => {
-        setAuth({});
+        setAuth({})
     }
 
     return (

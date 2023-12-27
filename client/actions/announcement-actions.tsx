@@ -1,9 +1,15 @@
+import { Attachment } from "./attachment-actions";
+
 export interface Announcement{
     AnID: string,
     AnTitle: string,
     AnDesc: string,
     AnDate: Date,
     CourseID:String
+}
+
+export interface AnnouncementWithAttachments extends Announcement {
+    Attachments: Attachment[];
 }
 
 export async function generateUniqueAnnouncementID() {
@@ -38,5 +44,13 @@ export async function getAnnouncementsByCourse(id: String): Promise<Announcement
     const data = await res.json();
     return data.result;
 }
+
+export const formatDate = (inputDate: Date) => {
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${day}/${month}/${year}`;
+};
 
 

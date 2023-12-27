@@ -26,7 +26,7 @@ const ContentCreationPage =  () => {
 
     return (
         <div className="py-5 md:px-12 px-6">
-            <Title classname="py-3 pl-5">Create new assignment</Title>
+            <Title classname="py-3 pl-5">Create new content</Title>
             <ContentForm />
         </div>
     );

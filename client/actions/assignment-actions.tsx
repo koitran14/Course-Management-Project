@@ -1,3 +1,5 @@
+import { Attachment } from "./attachment-actions";
+
 export interface Assignment{
     A_ID: string,
     A_Title: string,
@@ -9,15 +11,12 @@ export interface Assignment{
     DaysLeft: number,
 }
 
-
-export async function getAssignmentByID(id: string): Promise<Assignment> {
-    const res = await fetch(`http://localhost:8080/api/assignment/${id}`,{ next: { revalidate: 0 }}); 
-    const data = await res.json();
-    return await data.result;
+export interface AssignmentWithAttachments extends Assignment {
+    Attachments: Attachment[];
 }
 
 export async function getAssignmentsByCourseID(id: String): Promise<Assignment[]> {
-    const res = await fetch(`http://localhost:8080/api/assignment/course/${id}`,{ next: { revalidate: 0 }}); 
+    const res = await fetch(`http://localhost:8080/api/course/${id}/assignment`,{ next: { revalidate: 0 }}); 
     const data = await res.json();
     return data.result;
 }

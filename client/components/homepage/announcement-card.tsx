@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { Announcement} from "@/actions/announcement-actions";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
 
 export function AnnouncementCards ({
     title,
@@ -17,7 +17,7 @@ export function AnnouncementCards ({
     href?: string;
 }) {
     const [isExpanded, setIsExpanded] = useState(false);
-    const pathname = usePathname();
+    const params = useParams();
 
     const toggleExpansion = () => {
         {(data !== undefined && data !== null && data.length > 2)  && (
@@ -46,9 +46,9 @@ export function AnnouncementCards ({
                                 <div className="flex flex-col gap-y-3 w-full px-5">
                                     {data?.slice(0, 2).map((announcement) => (
                                         <div key={announcement.AnID} className="border-b-2 py-3">
-                                            <div >
+                                            <Link href={`/${params.UserID}/${announcement.CourseID}/announcements/${announcement.AnID}`}>
                                                 <p>{announcement.AnTitle}</p>
-                                            </div>
+                                            </Link>
                                         </div>
                                     ))}
                                 </div>
@@ -61,7 +61,7 @@ export function AnnouncementCards ({
                                     <div className="flex flex-col gap-y-3 w-full px-5">
                                         {data.slice(0, 6).map((announcement) => (
                                             <div key={announcement.AnID} className="border-b-2 py-3">
-                                                <Link href={pathname+ (`/${announcement.AnID}`)}>
+                                            <Link href={`/${params.UserID}/${announcement.CourseID}/announcements/${announcement.AnID}`}>
                                                     <p>{announcement.AnTitle}</p>
                                                 </Link>
                                             </div>

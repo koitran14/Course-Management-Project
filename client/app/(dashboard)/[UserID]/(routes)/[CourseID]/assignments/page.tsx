@@ -1,31 +1,38 @@
 "use client"
 
-import { Assignment, getAssignmentsByCourseID } from "@/actions/assignment-actions";
+import { AssignmentWithAttachments, getAssignmentsByCourseID } from "@/actions/assignment-actions";
 import useAuth from "@/hooks/useAuth";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { Title } from "@/components/ui/title";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
-import AssignmentCard from "@/components/homepage/assignment/As-info-card";
+import InfoCard from "@/components/homepage/assignment/As-info-card";
 import { useState, useEffect } from "react";
+import { formatDate } from "@/actions/announcement-actions";
+import { getAttachmentsByA_ID } from "@/actions/attachment-actions";
 
 const C_AssignmentPage = () => {
     const params = useParams();
     const { auth } = useAuth();
     const router = useRouter();
     const pathname  = usePathname();
-    const [assignment, setAssignments] = useState<Assignment[]>();
+    const [assignment, setAssignments] = useState<AssignmentWithAttachments[]>();
 
-    const getassignments = async(id: string) => {
+    const getAssignmentsWithAttachments = async (id: string) => {
         const result = await getAssignmentsByCourseID(id);
-        setAssignments(result);
-        return null;
-    }
-    
+
+        if (result) {
+            const attachmentsPromises = result.map(async (announcement) => {
+                const attachments = await getAttachmentsByA_ID(announcement.A_ID);
+                return { ...announcement, Attachments: attachments };
+            });
+            const assignmentsWithAttachments = await Promise.all(attachmentsPromises);
+            setAssignments(assignmentsWithAttachments);
+        }
+    };
     useEffect(() => {
-        getassignments(params.CourseID as string);
+        getAssignmentsWithAttachments(params.CourseID as string);
     },[params.CourseID])
-    
     const counter = (assignment !== undefined && assignment !== null) ? assignment?.length : 0;
 
     return (
@@ -43,7 +50,15 @@ const C_AssignmentPage = () => {
                 )}
             </div>
             <div className="flex flex-col gap-y-5 px-3">
-               <AssignmentCard />
+                {assignment ? (
+                    assignment.map((data) => (
+                        <div key={data.A_ID}>
+                            <InfoCard title={data.A_Title} description={data.A_Desc} time={formatDate(data.A_StartAt)} daysLeft={formatDate(data.A_DueDate)} href={`/${params.UserID}/${data.CourseID}/assignments/${data.A_ID}`} attachments={data.Attachments} deleteApi={`${process.env.NEXT_PUBLIC_API_URL}/assignment/${data.A_ID}`}/>
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-slate-400 text-sm font-medium w-full flex items-center justify-center">No data.</p>
+                )}
             </div>
         </div>
     );

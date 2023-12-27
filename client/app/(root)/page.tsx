@@ -6,14 +6,13 @@ import { redirect } from 'next/navigation'
 
 const SetupPage = () => {
     const {auth} = useAuth();
-    useEffect(() => {
-        if (auth.user === undefined){
+    useEffect(() =>{
+        if (!auth){
             redirect('/login');
         } else {
             redirect(`/${auth.userID}`);
         }
-    },[auth])
-    
+    })
     return null;
 }
  

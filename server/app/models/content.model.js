@@ -31,7 +31,12 @@ module.exports = class Content {
 
     async getAllByCourseID(id, result) {
         var pool = await conn;
-        var sqlString = "Select * from Content Where CourseID = @varID;"
+        var sqlString = `
+            SELECT *, DATEDIFF(DAY, ConDate, GETDATE()) AS DayDifference
+            FROM Content
+            WHERE CourseID = @varID
+            ORDER BY DayDifference ASC;        
+        `
         return await pool.request()
         .input('varID', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){
@@ -50,7 +55,7 @@ module.exports = class Content {
         return await pool.request()
             .input('ConID', sql.NVarChar(25), newData.ConID)
             .input('ConTitle', sql.NVarChar(50), newData.ConTitle)
-            .input('ConDesc', sql.NVarChar(150), newData.ConDesc)
+            .input('ConDesc', sql.NVarChar(1000), newData.ConDesc)
             .input('ConDate', sql.DateTime, newData.ConDate)
             .input('CourseID', sql.NVarChar(25), newData.CourseID)
         .query(sqlString, function(err, data) {
@@ -68,7 +73,7 @@ module.exports = class Content {
         
         return await pool.request()
         .input('ConTitle', sql.NVarChar(25), newData.Contitle)
-        .input('ConDesc', sql.NVarChar(25), newData.ConDesc)
+        .input('ConDesc', sql.NVarChar(1000), newData.ConDesc)
         .input('ConDate', sql.DateTime, newData.ConDate)
         .query(sqlString, function(err, data){
             if (err) {
@@ -81,7 +86,14 @@ module.exports = class Content {
 
     async delete(id, result) {
         var pool = await conn;
-        var sqlString = "DELETE FROM Content WHERE ConID = @id"
+        var sqlString = `
+        DELETE FROM ContentAttachment WHERE ConID = @id;
+
+        DELETE FROM Attachment WHERE AttachID IN (SELECT AttachID FROM ContentAttachment WHERE ConID = @id);
+
+        DELETE FROM Content WHERE ConID = @id;
+
+        `
         return await pool.request()
         .input('id', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){

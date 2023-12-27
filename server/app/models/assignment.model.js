@@ -122,19 +122,27 @@ module.exports = class Assignment {
     }
 
 
-   async getAllByCourseID(id, result) {
+    async getAllByCourseID(id, result) {
         var pool = await conn;
-        var sqlString = "SELECT * FROM Assignment WHERE CourseID = @varID AND DATEDIFF(DAY, GETDATE(), A_DueDate) > 0;";
-        return await pool.request()
-        .input('varID', sql.NVarChar(25), id)
-        .query(sqlString, function(err, data){
-            if (data.recordset.length > 0){
-                result(null, data.recordset);
-            } else {
-                result (true, null);
-            }
-        })
+        var sqlString = `
+            SELECT *
+            FROM Assignment
+            WHERE CourseID = @varID
+            ORDER BY DATEDIFF(DAY, GETDATE(), A_DueDate) DESC;
+        `;
+        
+        return await pool
+            .request()
+            .input('varID', sql.NVarChar(25), id)
+            .query(sqlString, function(err, data) {
+                if (data.recordset.length > 0) {
+                    result(null, data.recordset);
+                } else {
+                    result(true, null);
+                }
+            });
     }
+    
 
     async create(newData, result) {
         var pool = await conn;
@@ -143,7 +151,7 @@ module.exports = class Assignment {
         return await pool.request()
             .input('A_ID', sql.NVarChar(25), newData.A_ID)
             .input('A_Title', sql.NVarChar(50), newData.A_Title)
-            .input('A_Desc', sql.NVarChar(150), newData.A_Desc)
+            .input('A_Desc', sql.NVarChar(1000), newData.A_Desc)
             .input('A_StartAt', sql.DateTime, newData.A_StartAt)
             .input('A_DueDate', sql.DateTime, newData.A_DueDate)
             .input('CourseID', sql.NVarChar(25), newData.CourseID)
@@ -163,7 +171,7 @@ module.exports = class Assignment {
         
         return await pool.request()
         .input('A_Title', sql.NVarChar(50), newData.A_Title)
-        .input('A_Desc', sql.NVarChar(150), newData.A_Desc)
+        .input('A_Desc', sql.NVarChar(1000), newData.A_Desc)
         .input('A_StartAt', sql.DateTime, newData.A_StartAt)
         .input('A_DueDate', sql.DateTime, newData.A_DueDate)
         .query(sqlString, function(err, data){
@@ -177,7 +185,19 @@ module.exports = class Assignment {
 
     async delete(id, result) {
         var pool = await conn;
-        var sqlString = "DELETE FROM Assignment WHERE A_ID = @id"
+        var sqlString = `
+            DELETE FROM AssignmentSubmission
+            WHERE DoAssignmentID IN (SELECT DoAssignmentID FROM DoAssignment WHERE A_ID = @id);
+            
+            DELETE FROM Attachment
+            WHERE AttachID IN (
+                SELECT AttachID FROM AssignmentAttachment WHERE A_ID = @id
+            );
+            
+            DELETE FROM AssignmentAttachment WHERE A_ID = @id;
+            
+            DELETE FROM Assignment WHERE A_ID = @id;
+        `
         return await pool.request()
         .input('id', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){

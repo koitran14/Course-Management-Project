@@ -70,10 +70,10 @@ module.exports = class Announcement {
         return await pool.request()
             .input('AnID', sql.NVarChar(25), newData.AnID)
             .input('AnTitle', sql.NVarChar(50), newData.AnTitle)
-            .input('AnDesc', sql.NVarChar(150), newData.AnDesc)
+            .input('AnDesc', sql.NVarChar(1000), newData.AnDesc)
             .input('AnDate', sql.DateTime, newData.AnDate)
             .input('CourseID', sql.NVarChar(25), newData.CourseID)
-        .query(sqlString, function(err, data) {
+            .query(sqlString, function(err, data) {
             if (err) {
                 result(err, null)
             } else {
@@ -88,7 +88,7 @@ module.exports = class Announcement {
         
         return await pool.request()
         .input('AnTitle', sql.NVarChar(25), newData.AnTitle)
-        .input('AnDesc', sql.NVarChar(25), newData.AnDesc)
+        .input('AnDesc', sql.NVarChar(1000), newData.AnDesc)
         .input('AnDate', sql.DateTime, newData.AnDate)
         .query(sqlString, function(err, data){
             if (err) {
@@ -101,7 +101,16 @@ module.exports = class Announcement {
 
     async delete(id, result) {
         var pool = await conn;
-        var sqlString = "DELETE FROM Announcement WHERE AnID = @id"
+        var sqlString = `
+        DECLARE @AnIDToDelete VARCHAR(25);
+        SET @AnIDToDelete = @id;
+        
+        DELETE FROM AnnouncementAttachment WHERE AnID = @id;
+        
+        DELETE FROM Attachment WHERE AttachID IN (SELECT AttachID FROM AnnouncementAttachment WHERE AnID = @id);
+        
+        DELETE FROM Announcement WHERE AnID = @id; 
+        `
         return await pool.request()
         .input('id', sql.NVarChar(25), id)
         .query(sqlString, function(err, data){

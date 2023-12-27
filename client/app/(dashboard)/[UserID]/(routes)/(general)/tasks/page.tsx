@@ -2,12 +2,11 @@
 
 import { useParams } from "next/navigation";
 import { Title } from "@/components/ui/title";
-import AssignmentCard from "@/components/homepage/assignment/As-info-card";
-import { Announcement, getAnnouncements } from "@/actions/announcement-actions";
+import {AssignmentCard} from "@/components/homepage/assignment/As-info-card";
 import { useEffect, useState } from "react";
 import { Assignment, getAssignmentsByStudentID } from "@/actions/assignment-actions";
 
-const C_AnnouncementPage = () => {
+const TasksPage = () => {
     const params = useParams();
     const [task, setTasks] = useState<Assignment[]>();
 
@@ -28,10 +27,10 @@ const C_AnnouncementPage = () => {
                 <Title classname="pl-6">My Tasks ({counter})</Title>
             </div>
             <div className="flex flex-col gap-y-5 px-3">
-               <AssignmentCard />
+              {/* <AssignmentCard /> */}
             </div>
         </div>
     );
 }
  
-export default C_AnnouncementPage;
+export default TasksPage;

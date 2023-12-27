@@ -1,9 +1,15 @@
+import { Attachment } from "./attachment-actions";
+
 export interface Content{
     ConID: string,
     ConTitle: string,
     ConDesc: string,
     ConDate: Date,
     CourseID:String
+}
+
+export interface ContentWithAttachments extends Content {
+    Attachments: Attachment[];
 }
 
 export async function generateUniqueContentID() {

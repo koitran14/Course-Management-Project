@@ -5,7 +5,7 @@ USE CourseDB;
 CREATE TABLE Role (
     RoleID VARCHAR(25) PRIMARY KEY,
     RoleName varchar(25),
-    RoleDescription varchar(150),
+    RoleDescription varchar(1000),
 );
 
 CREATE TABLE [User] (
@@ -43,7 +43,7 @@ CREATE TABLE Course (
 CREATE TABLE Content (
     ConID VARCHAR(25) PRIMARY KEY,
     ConTitle VARCHAR (50),
-    ConDesc VARCHAR (150),
+    ConDesc VARCHAR (1000),
     ConDate DATETIME,
     CourseID VARCHAR(25),
 );
@@ -51,7 +51,7 @@ CREATE TABLE Content (
 CREATE TABLE Announcement(
     AnID VARCHAR(25) PRIMARY KEY,
     AnTitle VARCHAR(50),
-    AnDesc VARCHAR(150),
+    AnDesc VARCHAR(1000),
     AnDate DATETIME,
     CourseID VARCHAR(25),
 );
@@ -59,7 +59,7 @@ CREATE TABLE Announcement(
 CREATE TABLE Assignment (
     A_ID VARCHAR(25) PRIMARY KEY,
     A_Title VARCHAR(50),
-    A_Desc VARCHAR(150),
+    A_Desc VARCHAR(1000),
     A_StartAt DATETIME,
     A_DueDate DATETIME,
     CourseID VARCHAR(25),
@@ -67,17 +67,43 @@ CREATE TABLE Assignment (
 
 CREATE TABLE Attachment (
     AttachID VARCHAR(25) PRIMARY KEY,
-    Attach_FileName VARCHAR(50),
-    Attach_FileType VARCHAR(10),
-    Attach_Size FLOAT,
+    Attach_FileName VARCHAR(100),
     Attach_Date DATETIME,
-    Attach_URL DATETIME,
-    CourseID VARCHAR(25),
-    A_ID VARCHAR(25),
-    AnID VARCHAR(25),
-    ConID VARCHAR(25),
+    Attach_URL VARCHAR(150),
+    CourseID VARCHAR(25)
 );
 
+CREATE TABLE AnnouncementAttachment (
+    An_AtID uniqueidentifier PRIMARY KEY DEFAULT NEWID(),
+    AttachID VARCHAR(25),
+    AnID VARCHAR(25)
+);
+
+CREATE TABLE ContentAttachment (
+    Con_AtID uniqueidentifier PRIMARY KEY DEFAULT NEWID(), 
+    AttachID VARCHAR(25),
+    ConID VARCHAR(25)
+);
+
+CREATE TABLE AssignmentAttachment (
+    A_AtID uniqueidentifier PRIMARY KEY DEFAULT NEWID(),
+    AttachID VARCHAR(25),
+    A_ID VARCHAR(25)
+);
+
+CREATE TABLE AssignmentSubmission (
+    A_SubID uniqueidentifier PRIMARY KEY DEFAULT NEWID(),
+    AttachID VARCHAR(25),
+    DoAssignmentID UNIQUEIDENTIFIER,
+);
+
+CREATE TABLE DoAssignment(
+    DoAssignmentID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    A_ID VARCHAR(25),
+    UserID VARCHAR(25),
+    Grade FLOAT,
+    DoAt DateTime,
+)
 
 -- FOREIGN KEY
 -- Adding foreign key constraints to the [User] table
@@ -117,12 +143,26 @@ ADD CONSTRAINT FK_Assignment_Course FOREIGN KEY (CourseID) REFERENCES Course(Cou
 ALTER TABLE Attachment
 ADD CONSTRAINT FK_Attachment_Course FOREIGN KEY (CourseID) REFERENCES Course(CourseID);
 
-ALTER TABLE Attachment
-ADD CONSTRAINT FK_Attachment_Assignment FOREIGN KEY (A_ID) REFERENCES Assignment(A_ID);
+ALTER TABLE AssignmentAttachment
+ADD CONSTRAINT FK_AA_Assignment FOREIGN KEY (A_ID) REFERENCES Assignment(A_ID);
 
-ALTER TABLE Attachment
-ADD CONSTRAINT FK_Attachment_Announcement FOREIGN KEY (AnID) REFERENCES Announcement(AnID);
+ALTER TABLE AssignmentAttachment
+ADD CONSTRAINT FK_AA_Attachment FOREIGN KEY (AttachID) REFERENCES Attachment(AttachID);
 
-ALTER TABLE Attachment
-ADD CONSTRAINT FK_Attachment_Content FOREIGN KEY (ConID) REFERENCES Content(ConID);
+ALTER TABLE AnnouncementAttachment
+ADD CONSTRAINT FK_AnA_Announcement FOREIGN KEY (AnID) REFERENCES Announcement(AnID);
 
+ALTER TABLE AnnouncementAttachment
+ADD CONSTRAINT FK_AnA_Attachment FOREIGN KEY (AttachID) REFERENCES Attachment(AttachID);
+
+ALTER TABLE ContentAttachment
+ADD CONSTRAINT FK_CAt_Content FOREIGN KEY (ConID) REFERENCES Content(ConID);
+
+ALTER TABLE ContentAttachment
+ADD CONSTRAINT FK_CAt_Attachment FOREIGN KEY (AttachID) REFERENCES Attachment(AttachID);
+
+ALTER TABLE AssignmentSubmission
+ADD CONSTRAINT FK_AssignmentSubmission_DoAssignment FOREIGN KEY (DoAssignmentID) REFERENCES DoAssignment(DoAssignmentID);
+
+ALTER TABLE AssignmentSubmission
+ADD CONSTRAINT FK_AssignmentSubmission_Attachment FOREIGN KEY (AttachID) REFERENCES Attachment(AttachID);

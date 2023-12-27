@@ -20,7 +20,7 @@ const CourseNav = ({
                     <Home />
                 </Link>
                 <ChevronRight className="h-8 w-8"/>
-                <Link href={`/${params.UserID}/${params.CourseID}`}  className="font-semibold text-[17px] text-blue-800 line-clamp-1 w-full max-w-[350px] h-full">
+                <Link href={`/${params.UserID}/${params.CourseID}`}  className="font-semibold text-[17px] text-indigo-800 line-clamp-1 w-full max-w-[350px] h-full">
                     {currentCourse ? currentCourse : ''}
                 </Link>
             </div>

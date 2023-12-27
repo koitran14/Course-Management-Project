@@ -68,7 +68,7 @@ const MainPage: React.FC<MainPageProps> = async ({
   );
 
   return (
-    <div className='w-full grid md:grid-cols-2 grid-cols-1 auto-cols-fr pt-14 h-full gap-x-8 md:px-0 px-5'>
+    <div className='w-full grid md:grid-cols-2 grid-cols-1 auto-cols-fr pt-14 h-full gap-x-8 md:px-[200px] px-5'>
       {renderCards(col1.map((table) => ({
         title: table.title,
         component: table.component,

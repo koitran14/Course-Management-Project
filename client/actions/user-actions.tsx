@@ -17,6 +17,11 @@ export async function getUser(id: string): Promise<User> {
     return data.result;
 }
 
+export async function getFullname(id: string) {
+    const user = await getUser(id);
+    return user.UserFirstName + " " + user.UserLastName;
+}
+
 export async function getUserByUserName(username: string): Promise<User> {
     const res = await fetch(`http://localhost:8080/api/user/username/${username}`, {next: { revalidate: 0 }});
     const data = await res.json();

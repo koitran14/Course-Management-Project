@@ -1,14 +1,9 @@
 export interface Attachment{
     AttachID: string,
     Attach_FileName: string,
-    Attach_FileType: string,
-    Attach_Size: number,
     Attach_Date: Date,
-    Attach_URL: Date,
-    CourseID: string,
-    A_ID: string,
-    AnID: string,
-    ConID: string,
+    Attach_URL: string,
+    CourseID: string
 }
 
 export async function generateUniqueAttachment() {
@@ -32,6 +27,30 @@ export async function getAttachment(id: string): Promise<Attachment> {
 
 export async function getAttachments(id: String): Promise<Attachment[]> {
     const res = await fetch(`http://localhost:8080/api/${id}/attachment`,{ next: { revalidate: 0 }}); 
+    const data = await res.json();
+    return data.result;
+}
+
+export async function getAttachmentsByAnID(id: String): Promise<Attachment[]> {
+    const res = await fetch(`http://localhost:8080/api/attachment/announcement/${id}`,{ next: { revalidate: 0 }}); 
+    const data = await res.json();
+    return data.result;
+}
+
+export async function getAttachmentsByConID(id: String): Promise<Attachment[]> {
+    const res = await fetch(`http://localhost:8080/api/attachment/content/${id}`,{ next: { revalidate: 0 }}); 
+    const data = await res.json();
+    return data.result;
+}
+
+export async function getAttachmentsByA_ID(id: String): Promise<Attachment[]> {
+    const res = await fetch(`http://localhost:8080/api/attachment/assignment/${id}`,{ next: { revalidate: 0 }}); 
+    const data = await res.json();
+    return data.result;
+}
+
+export async function getAttachmentsBySubmissionID(UserID: string, A_ID: string): Promise<Attachment[]> {
+    const res = await fetch(`http://localhost:8080/api/attachment/submission/${UserID}/${A_ID}`,{ next: { revalidate: 0 }}); 
     const data = await res.json();
     return data.result;
 }

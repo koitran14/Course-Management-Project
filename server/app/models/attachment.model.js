@@ -28,24 +28,307 @@ module.exports = class Attachment {
         })
     }
 
-    async create(newData, result) {
+    async getByAnID(AnID, result) {
+        var pool = await conn;
+        var sqlString = `
+            SELECT Attachment.*
+            FROM Attachment
+            INNER JOIN AnnouncementAttachment ON Attachment.AttachID = AnnouncementAttachment.AttachID
+            WHERE AnnouncementAttachment.AnID = @varAnID;         
+        `;
+        return await pool.request()
+        .input('varAnID', sql.NVarChar(25), AnID)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset);
+            } else {
+                result (true, null);
+            }
+        })
+    }
+
+    async getByA_ID(A_ID, result) {
+        var pool = await conn;
+        var sqlString = `
+        SELECT Attachment.*
+        FROM Attachment
+        INNER JOIN AssignmentAttachment ON Attachment.AttachID = AssignmentAttachment.AttachID
+        WHERE AssignmentAttachment.A_ID = @varA_ID;         
+    `;
+
+        return await pool.request()
+        .input('varA_ID', sql.NVarChar(25), A_ID)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset);
+            } else {
+                result (true, null);
+            }
+        })
+    }
+
+    async getByConID(ConID, result) {
+        var pool = await conn;
+        var sqlString = `
+            SELECT Attachment.*
+            FROM Attachment
+            JOIN ContentAttachment ON Attachment.AttachID = ContentAttachment.AttachID
+            WHERE ContentAttachment.ConID = @varConID;        
+        `;
+        return await pool.request()
+        .input('varConID', sql.NVarChar(25), ConID)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset);
+            } else {
+                result (true, null);
+            }
+        })
+    }
+
+    async getBySubmissionID(UserID, A_ID, result) {
+        var pool = await conn;
+        var sqlString = `
+            SELECT Attachment.*
+            FROM Attachment
+            INNER JOIN AssignmentSubmission ON Attachment.AttachID = AssignmentSubmission.AttachID
+            INNER JOIN DoAssignment ON AssignmentSubmission.DoAssignmentID = DoAssignment.DoAssignmentID
+            WHERE DoAssignment.UserID = @varUserID
+            AND DoAssignment.A_ID = @varA_ID;
+        `;
+        return await pool.request()
+        .input('varUserID', sql.NVarChar(25), UserID)
+        .input('varA_ID', sql.NVarChar(25), A_ID)
+        .query(sqlString, function(err, data){
+            if (data.recordset.length > 0){
+                result(null, data.recordset);
+            } else {
+                result (true, null);
+            }
+        })
+    }
+
+    async createAttachment(newData, result) {
         try {
             var pool = await conn;
-            var sqlString = "INSERT INTO Attachment (AttachID, Attach_FileName, Attach_FileType, Attach_Size, Attach_Date, Attach_URL, CourseID, A_ID, AnID, ConID) VALUES (@AttachID, @Attach_FileName, @Attach_FileType, @Attach_Size, @Attach_Date, @Attach_URL, @CourseID, @A_ID, @AnID, @ConID)";
+            var sqlString = `            
+            INSERT INTO Attachment (AttachID, Attach_FileName, Attach_Date, Attach_URL, CourseID)
+            VALUES (@AttachID, @Attach_FileName, @Attach_Date, @Attach_URL, @CourseID);
+            `;
     
-            const request = pool.request();
-            request.input('AttachID', sql.NVarChar(25), newData.AttachID);
-            request.input('Attach_FileName', sql.NVarChar(25), newData.Attach_FileName);
-            request.input('Attach_FileType', sql.NVarChar(150), newData.Attach_FileType);
-            request.input('Attach_Size', sql.Float, newData.Attach_Size);
-            request.input('Attach_Date', sql.DateTime, newData.Attach_Date);
-            request.input('Attach_URL', sql.NVarChar(150), newData.Attach_URL);
-            request.input('CourseID', sql.NVarChar(150), newData.CourseID);
-            request.input('A_ID', sql.NVarChar(150), newData.A_ID);
-            request.input('AnID', sql.NVarChar(150), newData.AnID);
-            request.input('ConID', sql.NVarChar(150), newData.ConID);
+            const request = pool.request()
+            .input('AttachID', sql.NVarChar(25), newData.AttachID)
+            .input('Attach_FileName', sql.NVarChar(100), newData.Attach_FileName)
+            .input('Attach_Date', sql.DateTime, newData.Attach_Date)
+            .input('Attach_URL', sql.NVarChar(150), newData.Attach_URL)
+            .input('CourseID', sql.NVarChar(25), newData.CourseID)
+            const data = await request.query(sqlString);
+            result(null, data);
+        } catch (error) {
+            result(error, null);
+        }
+    }
 
+    async createAnnouncementAttachment(newData, result) {
+        try {
+            var pool = await conn;
+            var sqlString = `            
+            INSERT INTO AnnouncementAttachment (AttachID, AnID)
+            VALUES (@AttachID, @AnID);
+            `;
+    
+            const request = pool.request()
+            .input('AttachID', sql.NVarChar(25), newData.AttachID)
+            .input('AnID', sql.NVarChar(25), newData.AnID)
+            const data = await request.query(sqlString);
+            result(null, data);
+        } catch (error) {
+            result(error, null);
+        }
+    }
 
+    async createAssignmentAttachment(newData, result) {
+        try {
+            var pool = await conn;
+            var sqlString = `            
+            INSERT INTO AssignmentAttachment(AttachID, A_ID)
+            VALUES (@AttachID, @A_ID);
+            `;
+    
+            const request = pool.request()
+            .input('AttachID', sql.NVarChar(25), newData.AttachID)
+            .input('A_ID', sql.NVarChar(25), newData.A_ID)
+            const data = await request.query(sqlString);
+            result(null, data);
+        } catch (error) {
+            result(error, null);
+        }
+    }
+
+    async createContentAttachment(newData, result) {
+        try {
+            var pool = await conn;
+            var sqlString = `            
+            INSERT INTO ContentAttachment(AttachID, ConID)
+            VALUES (@AttachID, @ConID);
+            `;
+    
+            const request = pool.request()
+            .input('AttachID', sql.NVarChar(25), newData.AttachID)
+            .input('ConID', sql.NVarChar(25), newData.ConID)
+            const data = await request.query(sqlString);
+            result(null, data);
+        } catch (error) {
+            result(error, null);
+        }
+    }
+
+    async updateAnnouncementAttachment(attachmentID, newData, result) {
+        try {
+            var pool = await conn;
+            var sqlString = `
+                UPDATE Attachment
+                SET Attach_FileName = @Attach_FileName,
+                    Attach_Date = @Attach_Date,
+                    Attach_URL = @Attach_URL,
+                    CourseID = @CourseID
+                WHERE AttachID = @AttachID;
+    
+                UPDATE AnnouncementAttachment
+                SET AnID = @AnID
+                WHERE AttachID = @AttachID;
+            `;
+    
+            const request = pool.request()
+                .input('AttachID', sql.NVarChar(25), attachmentID)
+                .input('Attach_FileName', sql.NVarChar(100), newData.Attach_FileName)
+                .input('Attach_Date', sql.DateTime, newData.Attach_Date)
+                .input('Attach_URL', sql.NVarChar(150), newData.Attach_URL)
+                .input('CourseID', sql.NVarChar(25), newData.CourseID)
+                .input('AnID', sql.NVarChar(25), newData.AnID);
+    
+            const data = await request.query(sqlString);
+            result(null, data);
+        } catch (error) {
+            result(error, null);
+        }
+    }
+
+    async updateAssignmentAttachment(attachmentID, newData, result) {
+        try {
+            var pool = await conn;
+            var sqlString = `
+                UPDATE Attachment
+                SET Attach_FileName = @Attach_FileName,
+                    Attach_Date = @Attach_Date,
+                    Attach_URL = @Attach_URL,
+                    CourseID = @CourseID
+                WHERE AttachID = @AttachID;
+    
+                UPDATE AssignmentAttachment
+                SET A_ID = @A_ID
+                WHERE AttachID = @AttachID;
+            `;
+    
+            const request = pool.request()
+                .input('AttachID', sql.NVarChar(25), attachmentID)
+                .input('Attach_FileName', sql.NVarChar(100), newData.Attach_FileName)
+                .input('Attach_Date', sql.DateTime, newData.Attach_Date)
+                .input('Attach_URL', sql.NVarChar(150), newData.Attach_URL)
+                .input('CourseID', sql.NVarChar(25), newData.CourseID)
+                .input('A_ID', sql.NVarChar(25), newData.A_ID);
+    
+            const data = await request.query(sqlString);
+            result(null, data);
+        } catch (error) {
+            result(error, null);
+        }
+    }
+
+    async updateContentAttachment(attachmentID, newData, result) {
+        try {
+            var pool = await conn;
+            var sqlString = `
+                UPDATE Attachment
+                SET Attach_FileName = @Attach_FileName,
+                    Attach_Date = @Attach_Date,
+                    Attach_URL = @Attach_URL,
+                    CourseID = @CourseID
+                WHERE AttachID = @AttachID;
+    
+                UPDATE ContentAttachment
+                SET ConID = @ConID
+                WHERE AttachID = @AttachID;
+            `;
+    
+            const request = pool.request()
+                .input('AttachID', sql.NVarChar(25), attachmentID)
+                .input('Attach_FileName', sql.NVarChar(100), newData.Attach_FileName)
+                .input('Attach_Date', sql.DateTime, newData.Attach_Date)
+                .input('Attach_URL', sql.NVarChar(150), newData.Attach_URL)
+                .input('CourseID', sql.NVarChar(25), newData.CourseID)
+                .input('ConID', sql.NVarChar(25), newData.ConID);
+    
+            const data = await request.query(sqlString);
+            result(null, data);
+        } catch (error) {
+            result(error, null);
+        }
+    }
+
+    async deleteAnnouncementAttachment(attachmentID, result) {
+        try {
+            var pool = await conn;
+            var sqlString = `
+                DELETE FROM AnnouncementAttachment
+                WHERE AttachID = @AttachID;
+    
+                DELETE FROM Attachment
+                WHERE AttachID = @AttachID;
+            `;
+    
+            const request = pool.request()
+                .input('AttachID', sql.NVarChar(25), attachmentID);
+    
+            const data = await request.query(sqlString);
+            result(null, data);
+        } catch (error) {
+            result(error, null);
+        }
+    }
+
+    async deleteByID(attachmentID, result) {
+        try {
+            var pool = await conn;
+            var sqlString = `
+                DELETE FROM Attachment
+                WHERE AttachID = @AttachID;
+            `;
+    
+            const request = pool.request()
+                .input('AttachID', sql.NVarChar(25), attachmentID);
+    
+            const data = await request.query(sqlString);
+            result(null, data);
+        } catch (error) {
+            result(error, null);
+        }
+    }
+
+    async deleteAssignmentAttachment(attachmentID, result) {
+        try {
+            var pool = await conn;
+            var sqlString = `
+                DELETE FROM AssignmentAttachment
+                WHERE AttachID = @AttachID;
+    
+                DELETE FROM Attachment
+                WHERE AttachID = @AttachID;
+            `;
+    
+            const request = pool.request()
+                .input('AttachID', sql.NVarChar(25), attachmentID);
+    
             const data = await request.query(sqlString);
             result(null, data);
         } catch (error) {
@@ -53,42 +336,25 @@ module.exports = class Attachment {
         }
     }
     
-
-    async update(newData, result) {
+    async deleteContentAttachment(attachmentID, result) {
+        try {
             var pool = await conn;
-            var sqlString = "UPDATE Attachment SET (Attach_FileName = @Attach_FileName, Attach_FileType = @Attach_FileType, Attach_Size = @Attach_Size, Attach_Date = @Attach_Date, Attach_URL = @Attach_URL, CourseID = @CourseID, A_ID = @A_ID, AnID = @AnID, ConID = @ConID) WHERE AttachID = @AttachID"
-            
-            return await pool.request()
-            .input('Attach_FileName', sql.NVarChar(25), newData.Attach_FileName)
-            .input('Attach_FileType', sql.NVarChar(150), newData.Attach_FileType)
-            .input('Attach_Size', sql.Float, newData.Attach_Size)
-            .input('Attach_Date', sql.DateTime, newData.Attach_Date)
-            .input('Attach_URL', sql.NVarChar(150), newData.Attach_URL)
-            .input('CourseID', sql.NVarChar(150), newData.CourseID)
-            .input('A_ID', sql.NVarChar(150), newData.A_ID)
-            .input('AnID', sql.NVarChar(150), newData.AnID)
-            .input('ConID', sql.NVarChar(150), newData.ConID)
-            .query(sqlString, function(err, data){
-                if (err) {
-                    result(true, null)
-                } else {
-                    result(null, newData)
-                }
-            })
-    }
-
-    async delete(id, result) {
-            var pool = await conn;
-            var sqlString = "Delete from Attachment where AttachID = @id";
-            return await pool.request()
-            .input('id', sql.NVarChar(25), id)
-            .query(sqlString, function(err, data){
-                if (err){
-                    result(true, null);
-                } else {
-                    result(null, data);
-                }
-            })
+            var sqlString = `
+                DELETE FROM ContentAttachment
+                WHERE AttachID = @AttachID;
+    
+                DELETE FROM Attachment
+                WHERE AttachID = @AttachID;
+            `;
+    
+            const request = pool.request()
+                .input('AttachID', sql.NVarChar(25), attachmentID);
+    
+            const data = await request.query(sqlString);
+            result(null, data);
+        } catch (error) {
+            result(error, null);
         }
     }
+}   
 

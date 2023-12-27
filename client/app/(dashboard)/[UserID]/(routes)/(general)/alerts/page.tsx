@@ -2,26 +2,24 @@
 
 import { useParams } from "next/navigation";
 import { Title } from "@/components/ui/title";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
-import AssignmentCard from "@/components/homepage/assignment/As-info-card";
 import { useEffect, useState } from "react";
 import { Assignment, getAlerts } from "@/actions/assignment-actions";
+import { InfoCard } from "@/components/homepage/assignment/As-info-card";
 
-const C_AnnouncementPage = () => {
+const G_AlertsPage = () => {
     const params = useParams();
-    const [alert, setAlerts] = useState<Assignment[]>();
+    const [alerts, setAlerts] = useState<Assignment[]>();
 
-    const getannouncements = async(id: string) => {
-        const result = await getAlerts(id);
-        setAlerts(result);
-        return null;
-    }
+
     useEffect(() => {
-        getannouncements(params.UserID as string);
-    },[params.UserID])
+        const fetchData = async () => {
+            const data = await getAlerts(params.UserID as string);
+            setAlerts(data);
+        };
+        fetchData();
+    }, [params.UserID]);
 
-    const counter = (alert !== undefined && alert !== null) ? alert?.length : 0;
+    const counter = alerts?.length ?? 0;
 
     return (
         <div className="w-full h-full flex flex-col px-2 md:px-16">
@@ -29,10 +27,17 @@ const C_AnnouncementPage = () => {
                 <Title classname="pl-6">My Alerts ({counter})</Title>
             </div>
             <div className="flex flex-col gap-y-5 px-3">
-               <AssignmentCard />
+                {alerts && alerts.map((data) => (
+                    <div key={data.A_ID} >
+                        <InfoCard title={data.A_Title} time={data.FormattedDueDate} daysLeft={data.DaysLeft} href={`/${params.UserID}/${data.CourseID}/assignments/${data.A_ID}`}/>
+                    </div>
+                ))}
+                {!alerts && (
+                    <p className="w-full py-4 text-slate-400 italic flex items-center justify-center">No data.</p>
+                )}
             </div>
         </div>
     );
 }
  
-export default C_AnnouncementPage;
+export default G_AlertsPage;
