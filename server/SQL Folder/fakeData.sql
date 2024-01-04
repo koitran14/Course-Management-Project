@@ -77,10 +77,7 @@ INSERT INTO Announcement (AnID, AnTitle, AnDesc, AnDate, CourseID) VALUES
 ('A007', 'Assignment 3 Details', 'Details about the third assignment', '2023-03-15', 'C003'),
 ('A008', 'Final Exam Schedule', 'Details about the final exam', '2023-04-10', 'C003'),
 ('A009', 'Project Presentation Guidelines', 'Guidelines for the project presentation', '2023-04-20', 'C003');
--- ...Add more announcement entries for other courses as needed
 
-
--- Assignment data
 INSERT INTO Assignment (A_ID, A_Title, A_Desc, A_StartAt, A_DueDate, CourseID) VALUES
 ('AS001', 'Variables Exercise', 'Exercise on variables', '2023-01-25', '2023-02-05', 'C001'),
 ('AS002', 'Loop Structures Task', 'Task on loop structures', '2023-02-05', '2023-02-15', 'C001'),
@@ -91,5 +88,4 @@ INSERT INTO Assignment (A_ID, A_Title, A_Desc, A_StartAt, A_DueDate, CourseID) V
 ('AS007', 'Stacks and Queues Exercise', 'Exercise on stacks and queues', '2023-03-25', '2023-04-10', 'C003'),
 ('AS008', 'Binary Trees Quiz', 'Quiz on binary trees', '2023-04-05', '2023-04-20', 'C003'),
 ('AS009', 'Hash Tables Project', 'Project on hash tables', '2023-04-15', '2023-04-30', 'C003')
--- ...Add more assignment entries for other courses as needed
 ;

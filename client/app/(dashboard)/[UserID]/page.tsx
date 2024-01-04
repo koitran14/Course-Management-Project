@@ -20,17 +20,17 @@ interface MainPageProps {
 const MainPage: React.FC<MainPageProps> = async ({
   params
 }) => {
-  const user = await getUser(params.UserID);
-  const role = await getRole(user.RoleID);
-  const courses = await getCourses(params.UserID, role.RoleName);
-  const announcements = await getAnnouncements(params.UserID);
-  const assignments = await getAssignmentsByStudentID(params.UserID);
-  const alerts = await getAlerts(params.UserID);
+  const user = await getUser(params?.UserID);
+  const role = await getRole(user?.RoleID);
+  const courses = await getCourses(params?.UserID, role?.RoleName);
+  const announcements = await getAnnouncements(params?.UserID);
+  const assignments = await getAssignmentsByStudentID(params?.UserID);
+  const alerts = await getAlerts(params?.UserID);
 
   const col1: { title: string; href: string; data: CardData; component: React.ReactNode | null }[] = [
     {
       title: 'My Announcements',
-      href: `${params.UserID}/announcements`,
+      href: `${params?.UserID}/announcements`,
       data: announcements,
       component: <AnnouncementCards title='My Announcements' data={announcements} href={`${params.UserID}/announcements`} />,
     },

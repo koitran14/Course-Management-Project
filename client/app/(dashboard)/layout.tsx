@@ -3,7 +3,6 @@
 import NavBar from "@/components/homepage/navbar/nav-bar";
 import { redirect } from 'next/navigation';
 import useAuth from '@/hooks/useAuth'
-import { Loader } from "@/components/ui/loader";
 import { useEffect } from "react";
 
 const GeneralLayoutForPage = ({
