@@ -1,11 +1,8 @@
 "use client"
 
 import { AssignmentWithAttachments, getAssignmentsByStudentID } from "@/actions/assignment-actions";
-import useAuth from "@/hooks/useAuth";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { Title } from "@/components/ui/title";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
 import InfoCard from "@/components/homepage/assignment/As-info-card";
 import { useState, useEffect } from "react";
 import { formatDate } from "@/actions/announcement-actions";
@@ -13,9 +10,6 @@ import { getAttachmentsByA_ID } from "@/actions/attachment-actions";
 
 const GeneralAlerts = () => {
     const params = useParams();
-    const { auth } = useAuth();
-    const router = useRouter();
-    const pathname  = usePathname();
     const [assignment, setAssignments] = useState<AssignmentWithAttachments[]>();
 
     const getAssignmentsWithAttachments = async (id: string) => {

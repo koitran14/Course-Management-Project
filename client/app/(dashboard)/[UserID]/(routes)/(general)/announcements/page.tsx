@@ -1,13 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
-import useAuth from "@/hooks/useAuth";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { Title } from "@/components/ui/title";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+
 import  InfoCard  from "@/components/homepage/assignment/As-info-card";
-import { AnnouncementWithAttachments, formatDate, getAnnouncementByUserID, getAnnouncementsByCourse } from "@/actions/announcement-actions";
+import { AnnouncementWithAttachments, formatDate, getAnnouncementByUserID } from "@/actions/announcement-actions";
 import { useEffect, useState } from "react";
 import { getAttachmentsByAnID } from "@/actions/attachment-actions";
 
