@@ -35,7 +35,7 @@ const LoginPage = () => {
             />
             <div className="w-full absolute bottom-5 flex items-center justify-center">
                 <p className="text-sm font-light ">
-                    &copy; 2023 International University. All rights reserved.
+                    &copy; {new Date().getFullYear()} International University. All rights reserved.
                 </p>
             </div>
         </div>
