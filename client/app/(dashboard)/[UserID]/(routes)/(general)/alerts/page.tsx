@@ -1,6 +1,6 @@
 "use client"
 
-import { AssignmentWithAttachments, getAssignmentsByStudentID } from "@/actions/assignment-actions";
+import { AssignmentWithAttachments, getAlerts } from "@/actions/assignment-actions";
 import { useParams } from "next/navigation";
 import { Title } from "@/components/ui/title";
 import InfoCard from "@/components/homepage/assignment/As-info-card";
@@ -13,7 +13,7 @@ const GeneralAlerts = () => {
     const [assignment, setAssignments] = useState<AssignmentWithAttachments[]>();
 
     const getAssignmentsWithAttachments = async (id: string) => {
-        const result = await getAssignmentsByStudentID(id);
+        const result = await getAlerts(id);
 
         if (result) {
             const attachmentsPromises = result.map(async (assignment) => {

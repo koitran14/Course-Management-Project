@@ -1,6 +1,6 @@
 "use client"
 
-import { AssignmentWithAttachments, getAssignmentsByCourseID } from "@/actions/assignment-actions";
+import { AssignmentWithAttachments, getAlertsByCourse } from "@/actions/assignment-actions";
 import useAuth from "@/hooks/useAuth";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { Title } from "@/components/ui/title";
@@ -19,7 +19,7 @@ const C_Alerts = () => {
     const [assignment, setAssignments] = useState<AssignmentWithAttachments[]>();
 
     const getAssignmentsWithAttachments = async (id: string) => {
-        const result = await getAssignmentsByCourseID(id);
+        const result = await getAlertsByCourse(id);
 
         if (result) {
             const attachmentsPromises = result.map(async (assignment) => {
