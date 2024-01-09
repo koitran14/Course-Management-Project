@@ -36,7 +36,7 @@ const MainPage: React.FC<MainPageProps> = async ({
     },
     {
       title: 'My Alerts ',
-      href: `${params.UserID}/alerts`,
+      href: `${params?.UserID}/alerts`,
       data: alerts,
       component: <AlertCards title='My Alerts' data={alerts} href={`${params.UserID}/alerts`} />,
     },

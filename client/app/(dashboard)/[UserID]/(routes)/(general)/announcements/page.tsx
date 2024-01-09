@@ -1,38 +1,52 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
-import { useParams } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { Title } from "@/components/ui/title";
-import { Announcement, formatDate, getAnnouncements } from "@/actions/announcement-actions";
-import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { PlusCircle } from "lucide-react";
 import  InfoCard  from "@/components/homepage/assignment/As-info-card";
+import { AnnouncementWithAttachments, formatDate, getAnnouncementByUserID, getAnnouncementsByCourse } from "@/actions/announcement-actions";
+import { useEffect, useState } from "react";
+import { getAttachmentsByAnID } from "@/actions/attachment-actions";
 
-const AnnouncementPage = () => {
+const GeneralAnnouncementPage = () => {
     const params = useParams();
-    const [announcements, setAnnouncements] = useState<Announcement[]>();
+    const [announcements, setAnnouncements] = useState<AnnouncementWithAttachments[]>([]);
 
-    const getannouncements = async(id: string) => {
-        const result = await getAnnouncements(id);
-        setAnnouncements(result);
-        return null;
-    }
+    const getAnnouncementsAndAttachments = async (id: string) => {
+        setAnnouncements([]);
+        const result = await getAnnouncementByUserID(id);
+
+        if (result) {
+            const attachmentsPromises = result.map(async (announcement) => {
+                const attachments = await getAttachmentsByAnID(announcement.AnID);
+                return { ...announcement, Attachments: attachments };
+            });
+            const announcementsWithAttachments = await Promise.all(attachmentsPromises);
+            setAnnouncements(announcementsWithAttachments);
+        }
+    };
+
     useEffect(() => {
-        getannouncements(params.UserID as string);
+        getAnnouncementsAndAttachments(params.UserID as string);
     },[params.UserID])
 
     const counter = (announcements !== undefined && announcements !== null) ? announcements?.length : 0;
 
     return (
-        <div className="w-full h-full flex flex-col px-2 md:px-16 overflow-y-scroll pb-8">
+        <div className="w-full h-full flex flex-col px-2 md:px-16">
             <div className="w-full flex flex-row justify-between items-center py-8 px-4">
-                <Title classname="pl-6">My Announcements ({counter})</Title>
+                <Title classname="pl-6">Announcements ({counter})</Title>
             </div>
             <div className="flex flex-col gap-y-5 px-3">
                 {announcements && announcements.map((data) => (
                     <div key={data.AnID} >
-                        <InfoCard title={data.AnTitle} description={data.AnDesc} time={formatDate(data.AnDate)} href={`/${params.UserID}/${data.CourseID}/announcements/${data.AnID}`} deleteApi={`${process.env.NEXT_PUBLIC_API_URL}/announcement/${data.AnID}`}/>
+                        <InfoCard title={data.AnTitle} description={data.AnDesc} time={formatDate(data.AnDate)} href={`/${params.UserID}/${data.CourseID}/announcements/${data.AnID}`} attachments={data.Attachments} deleteApi={`${process.env.NEXT_PUBLIC_API_URL}/announcement/${data.AnID}`}/>
                     </div>
                 ))}
-                {!announcements && (
+                {counter === 0  && (
                     <p className="w-full py-4 text-slate-400 italic flex items-center justify-center">No data.</p>
                 )}
             </div>
@@ -40,4 +54,4 @@ const AnnouncementPage = () => {
     );
 }
  
-export default AnnouncementPage;
+export default GeneralAnnouncementPage;

@@ -45,6 +45,12 @@ export async function getAnnouncementsByCourse(id: String): Promise<Announcement
     return data.result;
 }
 
+export async function getAnnouncementByUserID(id: String): Promise<Announcement[]> {
+    const res = await fetch(`http://localhost:8080/api/user/${id}/announcement/`,{ next: { revalidate: 0 }}); 
+    const data = await res.json();
+    return data.result;
+}
+
 export const formatDate = (inputDate: Date) => {
     const date = new Date(inputDate);
     const year = date.getFullYear();

@@ -44,7 +44,7 @@ export async function getAssignmentsByCourseID(id: String): Promise<Assignment[]
  
  
  export async function getAssignmentsByStudentID(id: String): Promise<Assignment[]> {
-     const res = await fetch(`http://localhost:8080/api/student/${id}/assignment`,{ next: { revalidate: 0 }}); 
+     const res = await fetch(`http://localhost:8080/api/user/${id}/assignment`,{ next: { revalidate: 0 }}); 
      const data = await res.json();
      return data.result;
      }

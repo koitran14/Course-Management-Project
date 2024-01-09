@@ -11,7 +11,7 @@ module.exports = function(app) {
 
     app.get('/api/student/:id/assignment/near', getNearAssignmentsByUserId);
 
-    app.get('/api/student/:id/assignment', getAllAssignmentsByUserId);
+    app.get('/api/user/:id/assignment', getAllAssignmentsByUserId);
 
     app.post('/api/assignment', createAssignment);
 

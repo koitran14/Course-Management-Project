@@ -22,9 +22,9 @@ const C_AssignmentPage = () => {
         const result = await getAssignmentsByCourseID(id);
 
         if (result) {
-            const attachmentsPromises = result.map(async (announcement) => {
-                const attachments = await getAttachmentsByA_ID(announcement.A_ID);
-                return { ...announcement, Attachments: attachments };
+            const attachmentsPromises = result.map(async (assignment) => {
+                const attachments = await getAttachmentsByA_ID(assignment.A_ID);
+                return { ...assignment, Attachments: attachments };
             });
             const assignmentsWithAttachments = await Promise.all(attachmentsPromises);
             setAssignments(assignmentsWithAttachments);
