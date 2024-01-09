@@ -1,8 +1,5 @@
 "use client"
 
-
-import { useParams } from "next/navigation";
-
 import useAuth from "@/hooks/useAuth";
 
 import A_IDPageForTeacher from "./_component/teacher/teacher-page";

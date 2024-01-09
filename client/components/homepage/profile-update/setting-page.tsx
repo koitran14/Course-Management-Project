@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation";
+
 import { User, getUser, updateUser } from "@/actions/user-actions";
 import { DatePicker } from "@/components/homepage/profile-update/date-picker";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,9 @@ import toast from "react-hot-toast";
 
 
 const SettingPage = () => {
-    const router = useRouter();
+  
+  const router = useRouter();
+
   const params = useParams();
   const [user, setUser] = useState<User | undefined>();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
@@ -45,7 +48,6 @@ const SettingPage = () => {
         UserEmail: updatedUserEmail || user?.UserEmail || '',
         UserDOB: selectedDate,
       };
-
       if (newPassword || confirmNewPassword) {
         if (newPassword === confirmNewPassword) {
           updatedUserData.UserPass = newPassword;
@@ -55,9 +57,7 @@ const SettingPage = () => {
           return;
         }
       }
-
       const updatedUser = await updateUser(params.UserID as string, updatedUserData);
-
       if (updatedUser) {
         setUser(updatedUser);
         setSuccessMessage('Profile updated successfully');
@@ -142,9 +142,11 @@ const SettingPage = () => {
           </div>
         </div>
         <div className="flex flex-row gap-x-2 justify-end py-6">
-        <Button variant="outline" onClick={() => handleCancel()}>
+
+          <Button variant="outline" onClick={() => handleCancel()}>
             Cancel
           </Button>
+          
           <Button className="bg-blue-800" onClick={() => handleFormSubmit()}>
             Submit
           </Button>

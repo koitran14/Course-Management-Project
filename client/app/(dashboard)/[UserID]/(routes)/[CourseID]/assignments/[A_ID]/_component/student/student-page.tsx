@@ -62,6 +62,7 @@ const A_IDPageForStudent = () => {
         const newData = {
             A_ID: params.A_ID as string,
             UserID: params.UserID as string,
+            DoAt: new Date(),
             attachments: subAttachments
         }
 
@@ -175,7 +176,11 @@ const A_IDPageForStudent = () => {
                             <Button variant={"outline"} onClick={handleCancel}>Cancel</Button>
                             <AlertDialog>
                                 <AlertDialogTrigger asChild> 
-                                    <Button  className="bg-indigo-700 hover:bg-indigo-800" disabled={!subAttachments}>Submit</Button>
+                                    
+                                    <Button  className="bg-indigo-700 hover:bg-indigo-800" disabled={!subAttachments}>
+                                        Submit
+                                    </Button>
+                                    
                                 </AlertDialogTrigger>
                                 <AlertDialogContent>
                                     <AlertDialogHeader>

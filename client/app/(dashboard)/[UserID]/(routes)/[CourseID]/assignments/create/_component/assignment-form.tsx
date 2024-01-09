@@ -55,17 +55,11 @@ const AssignmentForm = () => {
     if (!validTitle || !validDesc || !validEndAt) {
       return;
     }
-
-    // Generate a unique ID for A_ID
     const uniqueID = await generateUniqueAssignment();
-  
-    // Create the assignment object with the generated unique ID
     const assignmentWithID = {
       ...assignment,
       A_ID: uniqueID,
-    };
-  
-    console.log(assignmentWithID);
+    };  
     try {
       const response = await axios.post('http://localhost:8080/api/assignment', assignmentWithID);
       console.log('Content created:', response.data);

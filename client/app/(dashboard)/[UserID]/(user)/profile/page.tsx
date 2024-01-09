@@ -33,7 +33,7 @@ const ProfilePage =  async ({
                 </div>
                 <div className="flex flex-row gap-x-1">
                     <h1 className="font-semibold text-indigo-800">
-                        Student name:    
+                        Full name:    
                     </h1> 
                     <h1>
                         {user.UserFirstName} {user.UserLastName}
