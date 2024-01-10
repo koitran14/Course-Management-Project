@@ -124,7 +124,7 @@ module.exports = class Submission {
             const request = pool.request()
                 .input('varA_ID', sql.NVarChar(25), newData.A_ID)
                 .input('varUserID', sql.NVarChar(25), newData.UserID)
-                .input('varDate', sql.NVarChar(25), newData.Do_At);
+                .input('varDate', sql.DateTime, newData.DoAt)
 
             const data = await request.query(sqlString);
             result(null, data);

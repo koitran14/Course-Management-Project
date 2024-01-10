@@ -59,10 +59,11 @@ const A_IDPageForStudent = () => {
 
     const handleSubmit = async() => {
       try {
+        const newDate = new Date();
         const newData = {
             A_ID: params.A_ID as string,
             UserID: params.UserID as string,
-            DoAt: new Date(),
+            DoAt: newDate,
             attachments: subAttachments
         }
 

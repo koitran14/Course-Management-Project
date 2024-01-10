@@ -24,7 +24,7 @@ const AttachFile = ({ attachment }: { attachment: Attachment }) => {
     const fileType = getFileTypeFromFileName(attachment.Attach_FileName);
 
     return (
-        <Link href={attachment.Attach_URL}>
+        <Link href={attachment.Attach_URL} target="_blank">
             <div className="w-48 h-12 bg-slate rounded-xl bg-white border-2 hover:border-indigo-800 border-slate-800 flex flex-row gap-x-2 items-center px-3">
                 <FileTextIcon className="h-14 w-14" />
                 <div className="w-full">
