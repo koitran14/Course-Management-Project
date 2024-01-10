@@ -100,6 +100,25 @@ module.exports = class Submission {
         }
     }
     
+    async updateGrade(newData, result) {
+        var pool = await conn;
+        var sqlString = `
+            UPDATE DoAssignment
+            SET Grade = @varGrade
+            WHERE A_ID = @varA_ID AND UserID = @varUserID;
+        `
+        return await pool.request()
+        .input('varA_ID', sql.NVarChar(25), newData.A_ID)
+        .input('varUserID', sql.NVarChar(25), newData.UserID)
+        .input('varGrade', sql.Float, newData.Grade)
+        .query(sqlString, function(err, data){
+            if (err) {
+                result(true, null)
+            } else {
+                result(null, newData)
+            }
+        })
+}
 
     async create(newData, result) {
         try {

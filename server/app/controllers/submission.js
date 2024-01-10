@@ -46,6 +46,12 @@ exports.createSubmission = async(req, res) => {
     });
 }
 
+exports.grading = async(req, res) => {
+    model.updateGrade(req.body, (err, data) => {
+        res.send({ result: data, error: err});
+    });
+}
+
 exports.deleteSubmission = async(req, res) => {
     model.delete(req.params.UserID, req.params.A_ID, (err, data) => {
         res.send({ result: data, error: err});
