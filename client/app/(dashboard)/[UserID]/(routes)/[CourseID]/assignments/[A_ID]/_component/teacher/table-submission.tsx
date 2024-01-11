@@ -37,7 +37,7 @@ const SubmissionTable = () => {
       
           for (const submission of result) {
             const fullName = await getFullname(submission.UserID);
-            const submissionStatus = assignment.A_DueDate > submission.DoAt ? "Late" : "At time"
+            const submissionStatus = assignment.A_DueDate < submission.DoAt ? "Late" : "Valid"
             const grade = submission.Grade === -1 ? 0 : submission.Grade
             
             formattedData.push({
