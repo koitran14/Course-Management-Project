@@ -55,6 +55,6 @@
     "html-loader": "^4.2.0",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.6",
-    "typescript": "^5"
+    "typescript": "^5.3.3"
   }
 }
