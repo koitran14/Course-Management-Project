@@ -69,7 +69,6 @@ Furthermore, the game possesses several constraints. Specifically, the game rema
 
 ### Documentation
 - To know more about our project, read [me](https://github.com/koitran14/Course-Management-Project/blob/master/record/Report_BlackBoard_PDMProject.pdf).
-<br>
 
 ### Thanks for reading 💖
 _If you have any questions, please contact: tndkhoi.work@gmail.com_
