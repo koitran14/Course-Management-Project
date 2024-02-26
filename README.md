@@ -27,7 +27,7 @@ To do this project, we use:
 - Model: `MVC System`.
 - IDE: `VsCode`, `SQL Server`.
 
-For more detailed information, you can find out in this [file](https://github.com/koitran14/The-Treasure-Hunt-Project/blob/main/The%20Treasure%20Hunt%20report.pdf).
+For more detailed information, you can find out in this [file](https://github.com/koitran14/Course-Management-Project/blob/master/record/Report_BlackBoard_PDMProject.pdf).
 
 ## Features
 ✨ Authentication & Authorization. <br/>
@@ -68,7 +68,7 @@ Furthermore, the game possesses several constraints. Specifically, the game rema
 - [MSc. Nguyen Quang Phu](https://it.hcmiu.edu.vn/user/nqphu/): provided valuable feedback and suggestions throughout our project's development.
 
 ### Documentation
-- To know more about our project, read [me](https://github.com/koitran14/The-Treasure-Hunt-Project/blob/main/The%20Treasure%20Hunt%20report.pdf).
+- To know more about our project, read [me](https://github.com/koitran14/Course-Management-Project/blob/master/record/Report_BlackBoard_PDMProject.pdf).
 <br>
 
 ### Thanks for reading 💖
