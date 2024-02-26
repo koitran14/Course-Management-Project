@@ -30,12 +30,12 @@ To do this project, we use:
 For more detailed information, you can find out in this [file](https://github.com/koitran14/The-Treasure-Hunt-Project/blob/main/The%20Treasure%20Hunt%20report.pdf).
 
 ## Features
-✨ Authentication & Authorization.
-✨ Announcements.
-✨ Contents.
-✨ Assignments with Due Date Alerts.
-✨ Attachments with.
-✨ Interactive statistic tables for Grade Collection.
+✨ Authentication & Authorization. \n
+✨ Announcements.\n
+✨ Contents.\n
+✨ Assignments with Due Date Alerts. \n
+✨ Attachments with. \n
+✨ Interactive statistic tables for Grade Collection. \n
 
 # Installation
 ### ✨ Cloning the repository
