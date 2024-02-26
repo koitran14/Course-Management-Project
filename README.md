@@ -1,7 +1,7 @@
 # IU BLACKBOARD: THE REMAKE
 #### _Principle of Database Management Project_
 
-![](res/obj/5_0OvA.gif)
+![](https://github.com/koitran14/Course-Management-Project/blob/master/record/thumbnail.png)
 #
 
 ## Introduction
