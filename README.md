@@ -5,10 +5,7 @@
 #
 
 ## Introduction
-In today’s rapid evolution of technology industry, there is an increasing need for continuous learning and updating of knowledge. To facilitate the adoption of new ideas, Object-Oriented Programming has emerged as a robust paradigm for organizing projects that including code more reusability, modularity, maintainability, and scalability, to embrace new algorithms more easily and systematically.
-
-Consequently, our team has made the choice to utilize Java.Swing (Java.awt) as the primary library for coding and implementing Object-Oriented Programming (OOP) in our game project, _“The Treasure Hunt”_. This decision was made in order to evaluate the viability of the principles inherent in this model. Furthermore, our goals encompassed enhancing our proficiency in collaborative projects and obtaining a more comprehensive comprehension of the game development process.
-
+The _`Blackboard IU`_ project í meticulously crafted to serve as an advanced education management system, streamlining academic administration with its array of essential functionalities. Users, whether they be students or instructors, are empowered with seamless access to a range of features designed to enhance their educational experience.
 
 ### Team members:
 
@@ -18,104 +15,57 @@ Consequently, our team has made the choice to utilize Java.Swing (Java.awt) as t
 | 2 | [Do Duy Anh](https://github.com/droho91) | ITCSIU21163 | 
 
 
-
 ### After this project, we aim to gain:
 - Master theories of the Principle of Database Management with MVC pattern✨
 - Learn new techniques of Web Application Programming with NextJS, NodeJS, SQL Server,...✨
 - Teamwork skills✨
 
-
-## About the game
-The _"IU Blackboard"_ project is meticulously crafted to serve as an advanced 
-education management system, streamlining academic administration with its 
-array of essential functionalities. Users, whether they be students or instructors, 
-are empowered with seamless access to a range of features designed to enhance 
-their educational experience.
-
-
 ## Technique 
 To do this project, we use: 
 - Language: `Typescript, JavaScript, SQL Queries`
-- Techiniques/Frameworks: `React, NextJS, NodeJS, SQL Server`
-- IDE: `IntelliJ`, `VsCode`, `Esclipe`.
-
-
-## Methodology
-
-To do this game, we create 10 packages to operate 10 main features of the game:
-1. Main package
-2. Levels package
-3. Entities package
-4. Objects package
-5. Gamestates package
-6. Inputs package
-7. UI package
-8. Audio package
-9. Effects package
-10. Utilz package
+- Techniques/Frameworks: `React, NextJS, TailwindCSS, NodeJS, SQL Server`
+- Model: `MVC System`.
+- IDE: `VsCode`, `SQL Server`.
 
 For more detailed information, you can find out in this [file](https://github.com/koitran14/The-Treasure-Hunt-Project/blob/main/The%20Treasure%20Hunt%20report.pdf).
 
-## User manual
-### ✨ Menu Navigation: 
-- Use the mouse click to select options in the game's menu. 
-- Press _`Ecs`_ to pause the game.
-
-
-### ✨ About character:
-- Stats of character: _`200HP`_ and _`200PP`_ maximum, **automatic PP-recovery only**.
-- Movement: _`A`_, _`D`_ and _`SPACEBAR`_ to move _left_, _right_ and _jump_ on the grid.
-- Attack: Use _`right-click`_ to attack, _`left-click`_ for the faster.
-> Note: `the quick attack` is required a huge energy consumption,
-<br>and you could use it with _`SPACEBAR`_ to surf in the air.
-
-
-### ✨ Items:
-- Potions: to recover stats of character with _`RED_POTION`_ for HP and _`BLUE_POTION`_ for PP.
-- Container: to contain the potions.
+## Features
+✨ Authentication & Authorization.
+✨ Announcements.
+✨ Contents.
+✨ Assignments with Due Date Alerts.
+✨ Attachments with.
+✨ Interactive statistic tables for Grade Collection.
 
 # Installation
 ### ✨ Cloning the repository
 
 ```shell
-git clone https://github.com/koitran14/The-Treasure-Hunt-Project.git
+git clone https://github.com/koitran14/Course-Management-Project.git
 ```
-
-Once the download is complete from github, you can launch the game in two ways:
-### ✨ By Common Prompt (CMD):
-- Step 1: Open the _`src`_ file.
-- Step 2: _`Right-click`_ once, then select _`Open in Terminal`_.
-- Step 3: Type like below and enjoy.
-
-
-```sh
-...\OOP.Project\src> javac *.java
-...\OOP.Project\src> java MainClass
-```
-### ✨ By Editor (VsCode, IntelliJ, Esclipe):
-Just open this project in your IDE, then enjoy 😉
-
-
-
 
 ## Result
-To summarize, the development of the Treasure Hunt game was made easier and more logical by adopting the Object-Oriented Programming (OOP) approach. This project effectively exemplifies the fundamental principles of OOP, such as encapsulation, abstraction, inheritance, and polymorphism. Alongside gaining expertise in applying OOP principles, it is essential to expand knowledge in related areas beyond the course curriculum. These areas encompass utilizing GIT for version control, resolving software bugs, solving complex problems, programming interactive games, and improving collaboration skills.
+During the project, our team successfully achieved the goal of developing the learning management system. Firstly, we design a database to adhere to the requirement of B.C Normal Form, ensuring efficient data storage and retrieval while eliminating data anomalies. Secondly, we connect the front-end interface of the application to the back-end database using Nodejs, establishing a seamless and secure connection between the authorization and authentication system, edit profile, add/ remove/edit course elements, access course elements and file attachments, implementing complex queries to manage various scenarios effectively.
+Through completing these goals, our project has delivered a reliable and user-friendly learning management system that meets the requirements of modern database management, security, and multi-role user experience.
 
 ## Limitation
 Furthermore, the game possesses several constraints. Specifically, the game remains unfinished due to time constraints and a lack of sufficient experience and expertise. Consequently, the classes and methods lack proper organization, efficiency, and cleanliness, making testing a rather complex task. Most importantly, the team encountered challenges in constructing, coordinating, and assigning tasks, occasionally necessitating starting over due to inexperience and confusion in the game development process.
+
 ## References
 
 ### Tutorials and Resources
-- [Treasure Hunter - Pixel Frog](https://pixelfrog-assets.itch.io/treasure-hunters): The main source of inspirational concept and animations for this project, including main character, weapons, enemies and environmental elements,...
-- [Java Game Development Tutorial - Kaarin Gaming](https://youtu.be/6_N8QZ47toY): A playlist of video tutorials covering various aspects of this project.
+- [SQL Server with Node.JS](https://www.youtube.com/watch?v=LIFWeHKZ5es&list=PLFWDoeAHRLTY1I4anPC9kTMwAX4iWUz_n&index=2):A playlist of Node.JS & MVC-System Tutorials For Beginners.
+
 
 ### External Libraries and Frameworks
-- [Java AWT](https://www.geeksforgeeks.org/what-is-java-awt-graphics/): A powerful library used in this project for Graphics. 
-
+- [Next.JS](https://nextjs.org/docs): Main React framework for building this full-stack LMS web application.
+- [Tailwind CSS](https://tailwindcss.com/docs/installation): A utility-first CSS framework supports for styling the website.
+- [Uploadthings](https://docs.uploadthing.com/): API service for file uploading features.
+- [Axios](https://www.npmjs.com/package/axios?activeTab=readme): Promise4 based HTTP client for the browser and Node.JS documentation.
 
 ### Acknowledgements
-- [Dr. Le Duy Tan](https://it.hcmiu.edu.vn/user/ldtan/): made significant contributions, particularly in Object-Oriented Programming's standard knowledge, which supported the whole concept of this project.
-- [Dr. Kieu Vu Thanh Tung](https://it.hcmiu.edu.vn/user/kvttung/): provided valuable feedback and suggestions throughout our project's development.
+- [Assoc. Prof. Nguyen Van Sinh](https://it.hcmiu.edu.vn/user/nvsinh/): made significant contributions, particularly in Principle of Database Management's standard knowledge, which supported the whole concept of this project.
+- [MSc. Nguyen Quang Phu](https://it.hcmiu.edu.vn/user/nqphu/): provided valuable feedback and suggestions throughout our project's development.
 
 ### Documentation
 - To know more about our project, read [me](https://github.com/koitran14/The-Treasure-Hunt-Project/blob/main/The%20Treasure%20Hunt%20report.pdf).
