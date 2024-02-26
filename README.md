@@ -7,7 +7,7 @@
 ## Introduction
 The _"Blackboard IU"_ project í meticulously crafted to serve as an advanced education management system, streamlining academic administration with its array of essential functionalities. Users, whether they be students or instructors, are empowered with seamless access to a range of features designed to enhance their educational experience.
 
-### Team members:
+## Team members:
 
 | Order | Full name | ID |
 | ------ | ------ | ------ |
@@ -15,7 +15,7 @@ The _"Blackboard IU"_ project í meticulously crafted to serve as an advanced ed
 | 2 | [Do Duy Anh](https://github.com/droho91) | ITCSIU21163 | 
 
 
-### After this project, we aim to gain:
+## Objectives:
 - Master theories of the Principle of Database Management with MVC pattern✨
 - Learn new techniques of Web Application Programming with NextJS, NodeJS, SQL Server,...✨
 - Teamwork skills✨
