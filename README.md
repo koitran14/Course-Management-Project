@@ -54,14 +54,14 @@ Furthermore, the game possesses several constraints. Specifically, the game rema
 ## References
 
 ### Tutorials and Resources
-- [SQL Server with Node.JS](https://www.youtube.com/watch?v=LIFWeHKZ5es&list=PLFWDoeAHRLTY1I4anPC9kTMwAX4iWUz_n&index=2):A playlist of Node.JS & MVC-System Tutorials For Beginners.
+- [SQL Server with Node.JS](https://www.youtube.com/watch?v=LIFWeHKZ5es&list=PLFWDoeAHRLTY1I4anPC9kTMwAX4iWUz_n&index=2): A playlist of Node.JS & MVC-System Tutorials For Beginners.
 
 
 ### External Libraries and Frameworks
 - [Next.JS](https://nextjs.org/docs): Main React framework for building this full-stack LMS web application.
 - [Tailwind CSS](https://tailwindcss.com/docs/installation): A utility-first CSS framework supports for styling the website.
 - [Uploadthings](https://docs.uploadthing.com/): API service for file uploading features.
-- [Axios](https://www.npmjs.com/package/axios?activeTab=readme): Promise4 based HTTP client for the browser and Node.JS documentation.
+- [Axios](https://www.npmjs.com/package/axios?activeTab=readme): Promise based HTTP client for the browser and Node.JS documentation.
 
 ### Acknowledgements
 - [Assoc. Prof. Nguyen Van Sinh](https://it.hcmiu.edu.vn/user/nvsinh/): made significant contributions, particularly in Principle of Database Management's standard knowledge, which supported the whole concept of this project.
