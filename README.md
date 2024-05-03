@@ -5,7 +5,7 @@
 
 
 ## Introduction
-The _"Blackboard IU"_ project í meticulously crafted to serve as an advanced education management system, streamlining academic administration with its array of essential functionalities. Users, whether they be students or instructors, are empowered with seamless access to a range of features designed to enhance their educational experience.
+The _"Blackboard IU"_ project is meticulously crafted to serve as an advanced education management system, streamlining academic administration with its array of essential functionalities. Users, whether they be students or instructors, are empowered with seamless access to a range of features designed to enhance their educational experience.
 
 ## Team members:
 
