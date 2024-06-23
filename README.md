@@ -1,8 +1,17 @@
-# IU BLACKBOARD: THE REMAKE
+<div align='center'>
+
+  # IU BLACKBOARD: THE REMAKE
 #### _Principle of Database Management Project_
+
+ ![GitHub repo size](https://img.shields.io/github/repo-size/koitran14/The-Treasure-Hunt-Project)
+![GitHub contributors](https://img.shields.io/github/contributors/koitran14/The-Treasure-Hunt-Project)
+![GitHub stars](https://img.shields.io/github/stars/koitran14/The-Treasure-Hunt-Project?style=social)
+![GitHub forks](https://img.shields.io/github/forks/koitran14/The-Treasure-Hunt-Project?style=social)
+![GitHub issues](https://img.shields.io/github/issues/koitran14/The-Treasure-Hunt-Project)
 
 ![](https://github.com/koitran14/Course-Management-Project/blob/master/record/thumbnail.png)
 
+</div>
 
 ## Introduction
 The _"Blackboard IU"_ project is meticulously crafted to serve as an advanced education management system, streamlining academic administration with its array of essential functionalities. Users, whether they be students or instructors, are empowered with seamless access to a range of features designed to enhance their educational experience.
