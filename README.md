@@ -1,7 +1,6 @@
 <div align='center'>
 
-  # IU BLACKBOARD: 
-  **THE REMAKE**
+  # IU BLACKBOARD: THE REMAKE
 #### _Principle of Database Management Project_
 
  ![GitHub repo size](https://img.shields.io/github/repo-size/koitran14/The-Treasure-Hunt-Project)
