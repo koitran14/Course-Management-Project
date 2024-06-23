@@ -20,8 +20,8 @@ The _"Blackboard IU"_ project is meticulously crafted to serve as an advanced ed
 
 | Order | Full name | ID |
 | ------ | ------ | ------ |
-| 1 | [Tran Ngoc Dang Khoi](https://github.com/koitran14) | ITCSIU21197 |
-| 2 | [Do Duy Anh](https://github.com/droho91) | ITCSIU21163 | 
+| 1 | [Trần Ngọc Đăng Khôi](https://github.com/koitran14) | ITCSIU21197 |
+| 2 | [Đỗ Duy Anh](https://github.com/droho91) | ITCSIU21163 | 
 
 
 ## Objectives:
